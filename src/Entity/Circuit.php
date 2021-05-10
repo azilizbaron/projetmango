@@ -6,6 +6,7 @@ use App\Repository\CircuitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CircuitRepository::class)
@@ -31,6 +32,7 @@ class Circuit
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="circuit_id")
+     * @Assert\Choise({"15","75"})
      */
     private $user_id;
 
