@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
@@ -80,18 +81,19 @@ class User implements UserInterface
     private $date_naissance;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Circuit::class, mappedBy="user_id")
-     */
-    private $circuit_id;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $membre;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user_id")
+     */
+    private $inscriptions;
+
     public function __construct()
     {
         $this->circuit_id = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,33 +273,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Circuit[]
-     */
-    public function getCircuitId(): Collection
-    {
-        return $this->circuit_id;
-    }
-
-    public function addCircuitId(Circuit $circuitId): self
-    {
-        if (!$this->circuit_id->contains($circuitId)) {
-            $this->circuit_id[] = $circuitId;
-            $circuitId->addUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCircuitId(Circuit $circuitId): self
-    {
-        if ($this->circuit_id->removeElement($circuitId)) {
-            $circuitId->removeUserId($this);
-        }
-
-        return $this;
-    }
-
     public function getMembre(): ?bool
     {
         return $this->membre;
@@ -306,6 +281,36 @@ class User implements UserInterface
     public function setMembre(bool $membre): self
     {
         $this->membre = $membre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getUserId() === $this) {
+                $inscription->setUserId(null);
+            }
+        }
 
         return $this;
     }
