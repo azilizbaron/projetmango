@@ -3,8 +3,16 @@
 {% block title %}Hello CourseController!{% endblock %}
 
 {% block body %}
+<ul>
 {% for course in courses %}
-    {{course}}
-    
+    <li>date : {{course.date}}</li>
+    <li>id : {{course.id}}</li>
+    <li>Nombre de places : {{course.nb_places}}</li>
+     <a href="{{path('admin_reporter_course',{courseEnfant : course.id})}}">Reporter les courses</a>
+
 {% endfor %}
+</ul>
+
+<p>Proposition : animation javascript pour confirmer avant de lancer la fonction</p>
+
 {% endblock %}

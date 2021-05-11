@@ -13,9 +13,9 @@ use DateTime;
 class CourseController extends AbstractController
 {
     /**
-     * @Route("/admin/course", name="admin_course")
+     * @Route("/admin/course", name="admin_consulter_course")
      */
-    public function index(EntityManagerInterface $em, CircuitRepository $repo): Response
+    public function consulterCourse(CircuitRepository $repo): Response
     {
         //date du jour
         $date = new DateTime();
@@ -41,9 +41,30 @@ class CourseController extends AbstractController
            
             $courses = $repo->coursesAVenir($nouvelleDate);
         } 
-        dd($courses);
         return $this->render('admin/course/index.html.twig', [
             'courses' => $courses,
         ]);
+    }
+
+    /**
+     * @Route("/admin/course/{courseEnfant}", name="admin_reporter_course")
+     */
+    public function reporterCourse(EntityManagerInterface $em, CircuitRepository $repo, Circuit $courseEnfant): Response
+    {
+        //je récupère la date de deux courses
+        $nouvelleDate = $courseEnfant->getDate();
+       
+        //j'avance la date de 7 jours
+        $nouvelleDate = date_modify($nouvelleDate,'+7 day');
+        //Je met a jour la date
+        $courseEnfant->setDate($nouvelleDate);
+        $em->persist($courseEnfant);
+       /* $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
+        $em->persist($courseAdulte);*/
+        $em->flush();
+        return $this->render('admin/course/test.html.twig', [
+            'courseEnfant' => $courseEnfant,
+        ]);
+       // return $this->redirectToRoute('admin_consulter_course');
     }
 }
