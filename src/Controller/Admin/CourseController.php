@@ -49,19 +49,25 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/{courseEnfant}", name="admin_reporter_course")
      */
-    public function reporterCourse(EntityManagerInterface $em, CircuitRepository $repo, Circuit $courseEnfant): Response
+    public function reporterCourse(EntityManagerInterface $em, Circuit $courseEnfant): Response
     {
         //je récupère la date de deux courses
         $nouvelleDate = $courseEnfant->getDate();
-       
+        dump( $nouvelleDate);
+      //  dump($nouvelleDate);
         //j'avance la date de 7 jours
         $nouvelleDate = date_modify($nouvelleDate,'+7 day');
+     //  dump($nouvelleDate);
         //Je met a jour la date
         $courseEnfant->setDate($nouvelleDate);
+         $a= $courseEnfant->getDate();
+     //  
+       
         $em->persist($courseEnfant);
        /* $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
         $em->persist($courseAdulte);*/
-        $em->flush();
+        $em->flush(); 
+        //dd($a);
         return $this->render('admin/course/test.html.twig', [
             'courseEnfant' => $courseEnfant,
         ]);
