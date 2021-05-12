@@ -5,6 +5,9 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,18 +20,23 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
+            ->add('Nom')
+            ->add('Prenom', null, [
+                'label' => 'Prénom'
             ])
+            ->add('email',EmailType::class)
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            // ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Mot de passe',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -43,6 +51,24 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('tel', null, [
+                'label' => 'Téléphone'
+            ])
+            ->add('date_naissance', DateType::class, ['widget' => 'single_text','years' => range(1940, date('Y')),
+            'label' => 'Date de naissance'])
+            ->add('adresse')
+            ->add('cp', null, [
+                'label' => 'Code postal'
+            ])
+            ->add('ville')
+            ->add('num_licence', null ,[
+                'label'  =>'Numéro de licence'])
+            ->add('membre', ChoiceType::class, [
+                'choices'  => [
+                    'Non' => 0,
+                    'Oui' => 1,
+                ],
+                'label' => 'Déjà adhérent ?'])
         ;
     }
 

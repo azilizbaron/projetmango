@@ -31,14 +31,15 @@ class Circuit
     private $nb_places;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="circuit_id")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="circuit_id")
      * @Assert\Choice({"15","75"})
      */
-    private $user_id;
+    private $inscriptions;
 
     public function __construct()
     {
         $this->user_id = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,26 +72,33 @@ class Circuit
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Inscription[]
      */
-    public function getUserId(): Collection
+    public function getInscriptions(): Collection
     {
-        return $this->user_id;
+        return $this->inscriptions;
     }
 
-    public function addUserId(User $userId): self
+    public function addInscription(Inscription $inscription): self
     {
-        if (!$this->user_id->contains($userId)) {
-            $this->user_id[] = $userId;
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setCircuitId($this);
         }
 
         return $this;
     }
 
-    public function removeUserId(User $userId): self
+    public function removeInscription(Inscription $inscription): self
     {
-        $this->user_id->removeElement($userId);
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getCircuitId() === $this) {
+                $inscription->setCircuitId(null);
+            }
+        }
 
         return $this;
     }
+
 }

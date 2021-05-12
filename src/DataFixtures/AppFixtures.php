@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Circuit;
+use App\Entity\Inscription;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -26,6 +27,11 @@ class AppFixtures extends Fixture
         ->setNbPlaces(75);
         $manager->persist($circuit3);
 
+        $circuit4 = new Circuit();
+        $circuit4->setDate(new DateTime("06/06/2021"))
+        ->setNbPlaces(15);
+        $manager->persist($circuit4);
+
         $userAdmin = new User();
         $userAdmin->setEmail("admin@admin.com")
         ->setRoles(['ROLE_ADMIN'])
@@ -38,7 +44,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("6666666666")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
         ->setMembre(1);
         $manager->persist($userAdmin);
 
@@ -54,8 +59,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77777777")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
-        ->addCircuitId($circuit2)
         ->setMembre(1);
         $manager->persist($membre1);
 
@@ -71,7 +74,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e5587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(1);
         $manager->persist($membre2);
 
@@ -87,7 +89,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(1);
         $manager->persist($membre3);
 
@@ -103,7 +104,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
         ->setMembre(0);
         $manager->persist($nonMembre1);
 
@@ -119,7 +119,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(0);
         $manager->persist($nonMembre2);
 
@@ -135,9 +134,45 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(0);
         $manager->persist($nonMembre3);
+
+        $inscription1 = new Inscription();
+        $inscription1->setDateInscription(new DateTime("10/12/1979"))
+        ->setUserId($membre1)
+        ->setCircuitId($circuit1);
+        $manager->persist($inscription1);
+
+        $inscription2 = new Inscription();
+        $inscription2->setDateInscription(new DateTime("2021-12-05"))
+        ->setUserId($membre2)
+        ->setCircuitId($circuit2);
+        $manager->persist($inscription2);
+
+        $inscription3 = new Inscription();
+        $inscription3
+        ->setDateInscription(new DateTime("2021-05-12"))
+        ->setUserId($membre3)
+        ->setCircuitId($circuit3);
+        $manager->persist($inscription3);
+
+        $inscription4 = new Inscription();
+        $inscription4->setDateInscription(new DateTime("2021-05-12"))
+        ->setUserId($nonMembre1)
+        ->setCircuitId($circuit1);
+        $manager->persist($inscription4);
+
+        $inscription5 = new Inscription();
+        $inscription5->setDateInscription(new DateTime("2021-05-05"))
+        ->setUserId($nonMembre2)
+        ->setCircuitId($circuit2);
+        $manager->persist($inscription5);
+
+        $inscription6 = new Inscription();
+        $inscription6->setDateInscription(new DateTime("2021-06-06"))
+        ->setUserId($nonMembre3)
+        ->setCircuitId($circuit3);
+        $manager->persist($inscription6);
         // $product = new Product();
         // $manager->persist($product);
 
