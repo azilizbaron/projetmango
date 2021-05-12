@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Circuit;
+use App\Entity\Inscription;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -38,7 +39,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("6666666666")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
         ->setMembre(1);
         $manager->persist($userAdmin);
 
@@ -54,8 +54,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77777777")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
-        ->addCircuitId($circuit2)
         ->setMembre(1);
         $manager->persist($membre1);
 
@@ -71,7 +69,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e5587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(1);
         $manager->persist($membre2);
 
@@ -87,7 +84,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(1);
         $manager->persist($membre3);
 
@@ -103,7 +99,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit1)
         ->setMembre(0);
         $manager->persist($nonMembre1);
 
@@ -119,7 +114,6 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(0);
         $manager->persist($nonMembre2);
 
@@ -135,11 +129,16 @@ class AppFixtures extends Fixture
         ->setVille('Rennes')
         ->setNumLicence("77e55587")
         ->setDateNaissance(new DateTime("10/12/1979"))
-        ->addCircuitId($circuit3)
         ->setMembre(0);
         $manager->persist($nonMembre3);
         // $product = new Product();
         // $manager->persist($product);
+
+        $inscription1 = new Inscription();
+        $inscription1->setDateInscription(new DateTime("1979-10-12 00:00:00"))
+                     ->setUserId($membre1)
+                     ->setCircuitId($circuit1);
+        $manager->persist($inscription1);
 
         $manager->flush();
     }
