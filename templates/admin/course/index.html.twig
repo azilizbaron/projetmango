@@ -3,16 +3,40 @@
 {% block title %}Hello CourseController!{% endblock %}
 
 {% block body %}
-<ul>
-{% for course in courses %}
-    <li>date : {{course.date}}</li>
-    <li>id : {{course.id}}</li>
-    <li>Nombre de places : {{course.nb_places}}</li>
-     <a href="{{path('admin_reporter_course',{courseEnfant : course.id})}}">Reporter les courses</a>
+<h1 class="text-center m-5">Page d'administration</h1>
+<table class = "table text-center">
+    <thead>
+        <tr>
+            <th>Circuit Adulte</th>
+            <th>Circuit Enfant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% for course in courses %}
+            <td>Nombre de place : {{course.nb_places}} </td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td>Date de la course : {{course.date | date("d/m/y")}} </td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}">Participants inscrits</a></td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td><a href="{{path('admin_reporter_course',{courseEnfant : course.id})}}">Reporter les courses</a></td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
 
-{% endfor %}
-</ul>
 
+<p>Replacer le nombre de place par nombre de places restantes</p>
 <p>Proposition : animation javascript pour confirmer avant de lancer la fonction</p>
 
 {% endblock %}

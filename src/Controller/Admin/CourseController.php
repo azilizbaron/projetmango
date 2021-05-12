@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CircuitRepository;
+use App\Repository\UserRepository;
 use App\Entity\Circuit;
+use App\Entity\User;
 use DateTime;
 
 class CourseController extends AbstractController
@@ -45,32 +47,42 @@ class CourseController extends AbstractController
             'courses' => $courses,
         ]);
     }
-
+    
     /**
      * @Route("/admin/course/{courseEnfant}", name="admin_reporter_course")
      */
-    public function reporterCourse(EntityManagerInterface $em, Circuit $courseEnfant): Response
-    {
+    public function reporterCourse(Circuit $courseEnfant): Response{
+        $em=$this->getDoctrine()->getManager();
         //je récupère la date de deux courses
-        $nouvelleDate = $courseEnfant->getDate();
-        dump( $nouvelleDate);
-      //  dump($nouvelleDate);
+        $Date = $courseEnfant->getDate();
         //j'avance la date de 7 jours
-        $nouvelleDate = date_modify($nouvelleDate,'+7 day');
-     //  dump($nouvelleDate);
+        $nouvelleDate = date_modify($Date,'+7 day');
         //Je met a jour la date
         $courseEnfant->setDate($nouvelleDate);
-         $a= $courseEnfant->getDate();
-     //  
-       
+
         $em->persist($courseEnfant);
+
        /* $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
         $em->persist($courseAdulte);*/
         $em->flush(); 
-        //dd($a);
+
         return $this->render('admin/course/test.html.twig', [
             'courseEnfant' => $courseEnfant,
         ]);
        // return $this->redirectToRoute('admin_consulter_course');
     }
+    /**
+     * @Route("/admin/course/participants/{course}", name="admin_consulter_participants")
+     */
+    public function consulterParticipants(EntityManagerInterface $em, UserRepository $repo, Circuit $course ) : Response{
+
+
+        //requete sql : 
+        $tabParticipants = $repo-> inscritCourse($course);
+        dd($tabParticipants);
+        return $this->render('admin/course/participants.html.twig',[
+            "participants" => $tabParticipants,
+        ]);
+    }
+   
 }

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourseController!{% endblock %}
+
+{% block body %}
+
+{% for participant in participants %}
+    {{dump(participant)}}
+{% endfor %}
+{% endblock %}

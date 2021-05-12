@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\InscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
+//use Doctrine\ORM\Mapping\JoinColumns;
 
 /**
  * @ORM\Entity(repositoryClass=InscriptionRepository::class)
@@ -19,11 +21,13 @@ class Inscription
 
     /**
      * @ORM\ManyToOne(targetEntity=user::class, inversedBy="inscriptions")
+     * JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=circuit::class, inversedBy="inscriptions")
+     * JoinColumn(name="circuit_id", referencedColumnName="id")
      */
     private $circuit;
 
