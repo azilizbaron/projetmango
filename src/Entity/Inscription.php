@@ -28,7 +28,7 @@ class Inscription
     private $circuit;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $dateInscription;
 
@@ -68,7 +68,7 @@ class Inscription
 
     public function setDateInscription(\DateTimeInterface $dateInscription): self
     {
-        $this->dateCourse = $dateInscription;
+        $this->dateInscription = $dateInscription;
 
         return $this;
     }
