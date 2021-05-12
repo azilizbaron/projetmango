@@ -27,6 +27,11 @@ class AppFixtures extends Fixture
         ->setNbPlaces(75);
         $manager->persist($circuit3);
 
+        $circuit4 = new Circuit();
+        $circuit4->setDate(new DateTime("06/06/2021"))
+        ->setNbPlaces(15);
+        $manager->persist($circuit4);
+
         $userAdmin = new User();
         $userAdmin->setEmail("admin@admin.com")
         ->setRoles(['ROLE_ADMIN'])
@@ -131,6 +136,43 @@ class AppFixtures extends Fixture
         ->setDateNaissance(new DateTime("10/12/1979"))
         ->setMembre(0);
         $manager->persist($nonMembre3);
+
+        $inscription1 = new Inscription();
+        $inscription1->setDateInscription(new DateTime("10/12/1979"))
+        ->setUserId($membre1)
+        ->setCircuitId($circuit1);
+        $manager->persist($inscription1);
+
+        $inscription2 = new Inscription();
+        $inscription2->setDateInscription(new DateTime("2021-12-05"))
+        ->setUserId($membre2)
+        ->setCircuitId($circuit2);
+        $manager->persist($inscription2);
+
+        $inscription3 = new Inscription();
+        $inscription3
+        ->setDateInscription(new DateTime("2021-05-12"))
+        ->setUserId($membre3)
+        ->setCircuitId($circuit3);
+        $manager->persist($inscription3);
+
+        $inscription4 = new Inscription();
+        $inscription4->setDateInscription(new DateTime("2021-05-12"))
+        ->setUserId($nonMembre1)
+        ->setCircuitId($circuit1);
+        $manager->persist($inscription4);
+
+        $inscription5 = new Inscription();
+        $inscription5->setDateInscription(new DateTime("2021-05-05"))
+        ->setUserId($nonMembre2)
+        ->setCircuitId($circuit2);
+        $manager->persist($inscription5);
+
+        $inscription6 = new Inscription();
+        $inscription6->setDateInscription(new DateTime("2021-06-06"))
+        ->setUserId($nonMembre3)
+        ->setCircuitId($circuit3);
+        $manager->persist($inscription6);
         // $product = new Product();
         // $manager->persist($product);
 

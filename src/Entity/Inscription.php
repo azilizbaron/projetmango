@@ -28,7 +28,7 @@ class Inscription
     private $circuit;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $dateInscription;
 
