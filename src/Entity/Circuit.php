@@ -32,7 +32,7 @@ class Circuit
 
     /**
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="circuit_id")
-     * @Assert\Choise({"15","75"})
+     * @Assert\Choice({"15","75"})
      */
     private $inscriptions;
 

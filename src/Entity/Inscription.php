@@ -28,9 +28,9 @@ class Inscription
     private $circuit;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    private $dateCourse;
+    private $dateInscription;
 
     public function getId(): ?int
     {
@@ -61,14 +61,14 @@ class Inscription
         return $this;
     }
 
-    public function getDateCourse(): ?\DateTimeInterface
+    public function getDateInscription(): ?\DateTimeInterface
     {
-        return $this->dateCourse;
+        return $this->dateInscription;
     }
 
-    public function setDateCourse(\DateTimeInterface $dateCourse): self
+    public function setDateInscription(\DateTimeInterface $dateInscription): self
     {
-        $this->dateCourse = $dateCourse;
+        $this->dateInscription = $dateInscription;
 
         return $this;
     }
