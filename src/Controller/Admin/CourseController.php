@@ -75,11 +75,8 @@ class CourseController extends AbstractController
      * @Route("/admin/course/participants/{course}", name="admin_consulter_participants")
      */
     public function consulterParticipants(EntityManagerInterface $em, UserRepository $repo, Circuit $course ) : Response{
-
-
-        //requete sql : 
+        
         $tabParticipants = $repo-> inscritCourse($course);
-        dd($tabParticipants);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
         ]);

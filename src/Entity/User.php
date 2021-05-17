@@ -91,11 +91,9 @@ class User implements UserInterface
     private $membre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user_id")
-     * @ORM\JoinTable(name="inscription_users",
-     *      JoinColumns={JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={JoinColumn(name="inscriptions", referencecColumnName="id", unique=true)}
-     * )
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user")
+     * 
+     * 
      */
     private $inscriptions;
 

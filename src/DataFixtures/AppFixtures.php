@@ -138,6 +138,20 @@ class AppFixtures extends Fixture
         ->setMembre(0);
         $manager->persist($nonMembre3);
 
+        $nonMembre4 = new User();
+        $nonMembre4->setEmail("test.test@outlook.fr")
+        ->setRoles(['ROLE_USER'])
+        ->setPassword('Test')
+        ->setNom('TEST')
+        ->setPrenom('TEST')
+        ->setTel("099668")
+        ->setAdresse("1 rue du pré")
+        ->setCp('35000')
+        ->setVille('Rennes')
+        ->setDateNaissance(new DateTime("10/12/1979"))
+        ->setMembre(0);
+        $manager->persist($nonMembre4);
+
         $inscription1 = new Inscription();
         $inscription1->setDateInscription(new DateTime("10/12/1979"))
         ->setUserId($membre1)
@@ -173,6 +187,14 @@ class AppFixtures extends Fixture
         $inscription6->setDateInscription(new DateTime("2021-06-06"))
         ->setUserId($nonMembre3)
         ->setCircuitId($circuit3);
+        $manager->persist($inscription6);
+
+        $inscription6 = new Inscription();
+        $inscription6->setDateInscription(new DateTime("2021-06-06"))
+        ->setUserId($nonMembre4)
+        ->setCircuitId($circuit3)
+        ->setCircuitId($circuit1)
+        ->setCircuitId($circuit2);
         $manager->persist($inscription6);
         // $product = new Product();
         // $manager->persist($product);

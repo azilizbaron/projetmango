@@ -42,9 +42,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         
         return $this->createQueryBuilder('u')
         ->leftJoin('u.inscriptions', 'i')
-   //     ->leftJoin('i.circuit', 'c')
-   //     ->where('c.id =:idCourse')
-    //    ->setParameter('idCourse', $idCourse)
+        ->where('i.circuit =:idCourse')
+        ->setParameter('idCourse', $idCourse)
         ->getQuery()
         ->execute(); 
 

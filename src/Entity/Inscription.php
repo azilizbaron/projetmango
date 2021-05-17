@@ -21,13 +21,13 @@ class Inscription
 
     /**
      * @ORM\ManyToOne(targetEntity=user::class, inversedBy="inscriptions")
-     * JoinColumn(name="user_id", referencedColumnName="id")
+     *
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=circuit::class, inversedBy="inscriptions")
-     * JoinColumn(name="circuit_id", referencedColumnName="id")
+     * 
      */
     private $circuit;
 

@@ -3,8 +3,30 @@
 {% block title %}Hello CourseController!{% endblock %}
 
 {% block body %}
-
-{% for participant in participants %}
-    {{dump(participant)}}
-{% endfor %}
+<table class = "table text-center">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>Numéro de licence</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>     
+        {% for participant in participants %}
+        <tr>
+            <td>{{participant.nom}}</td>
+            <td>{{participant.prenom}}</td>
+            <td>{{participant.email}}</td>
+            {% if participant.numLicence is null %}
+                <td><button type="button" class="btn btn-warning">Envoyer un mail</button></td>
+            {% else %}
+                <td>{{participant.numLicence}}</td>
+            {% endif %}
+            <td><button type="button" class="btn btn-danger">Supprimer de la course</button></td>
+         </tr>   
+        {% endfor %}   
+    </tboby>
+</table>
 {% endblock %}
