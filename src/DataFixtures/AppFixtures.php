@@ -199,6 +199,12 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
+        $inscription1 = new Inscription();
+        $inscription1->setDateInscription(new DateTime("1979-10-12 00:00:00"))
+                     ->setUserId($membre1)
+                     ->setCircuitId($circuit1);
+        $manager->persist($inscription1);
+
         $manager->flush();
     }
 }

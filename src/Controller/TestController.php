@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 class TestController extends AbstractController
 {
@@ -17,4 +19,15 @@ class TestController extends AbstractController
             'controller_name' => 'TestController',
         ]);
     }
+
+   
+ /*   public function helloAction() : Response
+    {
+    return $this->render (view:'default/index.html.twig', [
+        'name'=> 'Hello'
+    ]);
+    }*/
+
+
+
 }
