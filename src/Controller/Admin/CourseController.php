@@ -89,30 +89,14 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/supp/{user}/{circuit}", name="admin_supprimer_participants" , methods ="delete")
      */
-    public function supprimerParticipants(InscriptionRepository $repo, User $user, Circuit $circuit, Request $request, UserRepository $repou){
+    public function supprimerParticipants(InscriptionRepository $repo, User $user, Circuit $circuit, Request $request){
 
-            if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
-                $repo->deleteInscription($user, $circuit);
-
-            }
+        //Pour la sécurité on vérifie si avec la requête de supression, on a bien le token
+        if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
+            $repo->deleteInscription($user, $circuit);
+        }
     
-            return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
-    
-
-        //dans la table inscription supprimer le couple iduser->idcourse
-      /*  $builder = $this->createFormBuilder();
-        $builder->add('Valider', SubmitType::class);
-        $form = $builder->getForm();
-
-        if($form->isSubmitted()){
-            $repo->deleteInscription($user, $circuit); 
-            return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
-        };
-        //a corriger
-        //return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
-         return $this->render('/admin/course/suppParticipants.html.twig',[
-             'form' => $form,
-         ]);*/
+        return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
     }
    
 }

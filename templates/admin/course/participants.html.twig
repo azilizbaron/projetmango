@@ -29,7 +29,7 @@
                     <input type="hidden" name="_method" value="delete">
                     <input type="hidden" name="_token" value="{{csrf_token('SUP'~ participant.id ~ course.id)}}">
                     <input type="submit" class= "btn btn-danger" value="Supprimer">
-                </form onSubmit="return confirm('Confirmer la suppression ?')">
+                </form onSubmit= return confirm('Confirmer la suppression ?')>
             </td>
          </tr>   
         {% endfor %}   
