@@ -10,7 +10,10 @@ use App\Repository\CircuitRepository;
 use App\Repository\UserRepository;
 use App\Entity\Circuit;
 use App\Entity\User;
+use App\Repository\InscriptionRepository;
 use DateTime;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class CourseController extends AbstractController
 {
@@ -74,12 +77,42 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/participants/{course}", name="admin_consulter_participants")
      */
-    public function consulterParticipants(EntityManagerInterface $em, UserRepository $repo, Circuit $course ) : Response{
+    public function consulterParticipants(UserRepository $repo, Circuit $course ) : Response{
         
         $tabParticipants = $repo-> inscritCourse($course);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
+            "course" => $course 
         ]);
+    }
+
+    /**
+     * @Route("/admin/course/supp/{user}/{circuit}", name="admin_supprimer_participants" , methods ="delete")
+     */
+    public function supprimerParticipants(InscriptionRepository $repo, User $user, Circuit $circuit, Request $request, UserRepository $repou){
+
+            if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
+                $repo->deleteInscription($user, $circuit);
+
+            }
+    
+            return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
+    
+
+        //dans la table inscription supprimer le couple iduser->idcourse
+      /*  $builder = $this->createFormBuilder();
+        $builder->add('Valider', SubmitType::class);
+        $form = $builder->getForm();
+
+        if($form->isSubmitted()){
+            $repo->deleteInscription($user, $circuit); 
+            return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
+        };
+        //a corriger
+        //return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
+         return $this->render('/admin/course/suppParticipants.html.twig',[
+             'form' => $form,
+         ]);*/
     }
    
 }
