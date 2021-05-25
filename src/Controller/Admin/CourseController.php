@@ -52,9 +52,9 @@ class CourseController extends AbstractController
     }
     
     /**
-     * @Route("/admin/course/{courseEnfant}", name="admin_reporter_course")
+     * @Route("/admin/course/{courseEnfant}/{courseAdulte}", name="admin_reporter_course")
      */
-    public function reporterCourse(Circuit $courseEnfant): Response{
+    public function reporterCourse(Circuit $courseEnfant, Circuit $courseAdulte): Response{
         $em=$this->getDoctrine()->getManager();
         //je récupère la date de deux courses
         $Date = $courseEnfant->getDate();
@@ -65,8 +65,10 @@ class CourseController extends AbstractController
 
         $em->persist($courseEnfant);
 
-       /* $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
-        $em->persist($courseAdulte);*/
+        //même chose pour les adulte mais en condencer
+        $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
+        $em->persist($courseAdulte);
+
         $em->flush(); 
 
         return $this->render('admin/course/test.html.twig', [
