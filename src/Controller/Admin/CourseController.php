@@ -14,6 +14,8 @@ use App\Repository\InscriptionRepository;
 use DateTime;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class CourseController extends AbstractController
 {
@@ -97,6 +99,34 @@ class CourseController extends AbstractController
         }
     
         return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
+    }
+
+    /**
+     * @Route("/admin/couse/participants/pdf/{course}", name="admin_pdf")
+     */
+    public function genererPdf(UserRepository $repo, Circuit $course ){
+        // les participants à la course
+        $tabParticipants = $repo-> inscritCourse($course);
+
+        //création du pdf
+        $dompdf= new Dompdf();
+
+        //récupération de la vue    
+        $html = $this->renderView("admin/course/pdf.html.twig", [
+            "participants" => $tabParticipants,
+            "date" => $course->getDate()
+        ]);
+        
+        //passer du html au pdf
+        $dompdf->loadHtml($html);
+
+        //options
+        $dompdf->setPaper("A4", "portrait");
+        $dompdf->render();
+        //Afficher le pdf dans le navigateur
+        $dompdf->stream("listeEmargement.pdf",[
+            "Attachment"=>false
+        ]);
     }
    
 }

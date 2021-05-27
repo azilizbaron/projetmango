@@ -1,0 +1,33 @@
+{% block header %}
+    <style>
+        table,th,td{
+         border : 1px solid black;
+         border-collapse : collapse;
+         width: 100%;
+         text-align : center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<h1>Liste d'émargement </h1>
+<h2>Evènement du :  {{date | date("d/m/y")}}</h2>
+<table border>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Signature</th>
+        </tr>
+    </thead>
+    <tbody>     
+        {% for participant in participants %}
+        <tr>
+            <td>{{participant.nom}}</td>
+            <td>{{participant.prenom}}</td>
+            <td></td>
+         </tr>   
+        {% endfor %}   
+    </tboby>
+</table>
+{% endblock %}
