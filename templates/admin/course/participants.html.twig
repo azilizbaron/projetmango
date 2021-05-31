@@ -10,7 +10,7 @@
             <th>Prenom</th>
             <th>Email</th>
             <th>Numéro de licence</th>
-            <th> </th>
+            <th><a href="{{path('admin_pdf',{course : course.id})}}">pdf</a></th>
         </tr>
     </thead>
     <tbody>     
@@ -35,5 +35,4 @@
         {% endfor %}   
     </tboby>
 </table>
-<a href="{{path('admin_pdf',{course : course.id})}}">PDF</a>
 {% endblock %}
