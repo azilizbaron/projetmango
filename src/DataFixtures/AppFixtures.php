@@ -13,7 +13,12 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
-    {   $circuit1 = new Circuit();
+    {     
+      //création du faker
+        $faker = \Faker\Factory::create("fr_FR");
+
+        // création des circuits
+        $circuit1 = new Circuit();
         $circuit1->setDate(new DateTime("05/02/2021"))
         ->setNbPlaces(75);
         $manager->persist($circuit1);
@@ -33,6 +38,24 @@ class AppFixtures extends Fixture
         ->setNbPlaces(15);
         $manager->persist($circuit4);
 
+        $circuit5 = new Circuit();
+        $circuit5->setDate(new DateTime("04/07/2021"))
+        ->setNbPlaces(75);
+        $manager->persist($circuit5);
+
+        $circuit6 = new Circuit();
+        $circuit6->setDate(new DateTime("04/07/2021"))
+        ->setNbPlaces(15);
+        $manager->persist($circuit6);
+
+        //tableau avec tous les circuits adultes
+        $circuitsAdultes=[$circuit1,$circuit3,$circuit5];
+
+        //tableau avec tous les circuits enfants
+        $circuitsEnfants=[$circuit2,$circuit4, $circuit6];
+
+
+        //Création de l'administrateur
         $userAdmin = new User();
         $userAdmin->setEmail("admin@admin.com")
         ->setRoles(['ROLE_ADMIN'])
@@ -48,7 +71,64 @@ class AppFixtures extends Fixture
         ->setMembre(1);
         $manager->persist($userAdmin);
 
-        $membre1 = new User();
+
+        //génération de données aléatoires pour crée des utilisateur
+        foreach($circuitsAdultes as $ca){
+          for($i =0; $i<75; $i++){
+            //pour chaque course, création de 75 membres
+            $membre = new User();
+            $membre->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setPassword('motDePasse')
+            ->setNom($faker->lastName())
+            ->setPrenom($faker->firstName())
+            ->setTel($faker->regexify("\d{10}"))
+            ->setAdresse($faker->streetAddress())
+            ->setCp($faker->regexify("\d{5}"))
+            ->setVille($faker->country())
+            ->setNumLicence($faker->regexify("\d{0,5}"))
+            ->setDateNaissance(new DateTime($faker->date()))
+            ->setMembre($faker->regexify("[0-1]"));
+            $manager->persist($membre);
+
+            //inscrition du membre à la course 
+            $inscription = new Inscription();
+            $inscription->setDateInscription($faker->dateTimeThisYear())
+                        ->setUserId($membre)
+                        ->setCircuitId($ca);
+            $manager->persist($inscription);
+          }
+        }
+
+        foreach($circuitsEnfants as $ce){
+          for($i=0; $i<15; $i++){
+            //pour chaque courses, création de 15 membres
+            $membre = new User();
+            $membre->setEmail($faker->email())
+            ->setRoles(['ROLE_USER'])
+            ->setPassword('motDePasse')
+            ->setNom($faker->lastName())
+            ->setPrenom($faker->firstName())
+            ->setTel($faker->regexify("\d{10}"))
+            ->setAdresse($faker->streetAddress())
+            ->setCp($faker->regexify("\d{5}"))
+            ->setVille($faker->country())
+            ->setNumLicence($faker->regexify("\d{0,5}"))
+            ->setDateNaissance(new DateTime($faker->date()))
+            ->setMembre($faker->regexify("[0-1]"));
+            $manager->persist($membre);
+
+            //inscrition du membre à la course 
+            $inscription = new Inscription();
+            $inscription->setDateInscription($faker->dateTimeThisYear())
+                        ->setUserId($membre)
+                        ->setCircuitId($ce);
+            $manager->persist($inscription);
+          }
+        }
+
+        
+      /*  $membre1 = new User();
         $membre1->setEmail("RIHARD.Lionel@gmail.com")
         ->setRoles(['ROLE_USER'])
         ->setPassword('Lionel')
@@ -203,7 +283,7 @@ class AppFixtures extends Fixture
         $inscription1->setDateInscription(new DateTime("1979-10-12 00:00:00"))
                      ->setUserId($membre1)
                      ->setCircuitId($circuit1);
-        $manager->persist($inscription1);
+        $manager->persist($inscription1); */
 
         $manager->flush();
     }
