@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class CourseController extends AbstractController
 {
@@ -76,6 +78,7 @@ class CourseController extends AbstractController
         ]);
        // return $this->redirectToRoute('admin_consulter_course');
     }
+
     /**
      * @Route("/admin/course/participants/{course}", name="admin_consulter_participants")
      */
@@ -91,14 +94,19 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/supp/{user}/{circuit}", name="admin_supprimer_participants" , methods ="delete")
      */
-    public function supprimerParticipants(InscriptionRepository $repo, User $user, Circuit $circuit, Request $request){
+    public function supprimerParticipants(InscriptionRepository $repoI, User $user, Circuit $circuit, Request $request, UserRepository $repoU){
 
         //Pour la sécurité on vérifie si avec la requête de supression, on a bien le token
         if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
-            $repo->deleteInscription($user, $circuit);
+            $repoI->deleteInscription($user, $circuit);
         }
     
-        return $this->redirect("/projets/projetmango/public/admin/course/participants/" . $circuit->getId() );
+        //récupération des données pour envoyer la vue
+        $tabParticipants = $repoU-> inscritCourse($circuit);
+        return $this->render('admin/course/participants.html.twig',[
+            "participants" => $tabParticipants,
+            "course" => $circuit 
+        ]);
     }
 
     /**
@@ -128,5 +136,31 @@ class CourseController extends AbstractController
             "Attachment"=>false
         ]);
     }
+
+    /**
+     * @Route("/admin/courses/participants/{circuit}/{user}", name="admin_mail_licence")
+     */
+    public function envoyerMailLicence(User $user, MailerInterface $mailer, UserRepository $repo, Circuit $circuit){
+        //construction et envoie du mail
+        $email=(new Email())
+            ->from("projetmangopoec@gmail.com")
+            ->to($user->getEmail())
+            ->subject("Numéro de licence")
+            ->text(
+            "Bonjour,  
+            merci de bien vouloir indiquer votre numéro le licence afin de pouvoir particier à la prochaine course de motocross.
+            Si celle-ci n'est pas indiqué la veille de l'évènement nous serons contraint d'anuler votre inscrition. 
+            En vous remerciant pour votre compréhension. 
+            Cordialement, l'équipe MX PARC");
+        $mailer->send($email);
+        
+        //récupération des données pour envoyer la vue
+        $tabParticipants = $repo-> inscritCourse($circuit);
+        return $this->render('admin/course/participants.html.twig',[
+            "participants" => $tabParticipants,
+            "course" => $circuit 
+        ]);
+    }
+    
    
 }
