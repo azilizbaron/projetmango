@@ -19,8 +19,8 @@
             <td>{{participant.nom}}</td>
             <td>{{participant.prenom}}</td>
             <td>{{participant.email}}</td>
-            {% if participant.numLicence is null %}
-                <td><button type="button" class="btn btn-warning">Envoyer un mail</button></td>
+            {% if participant.numLicence == "" %}
+                <td><a href="{{path('admin_mail_licence',{user:participant.id, circuit: course.id})}}" class="btn btn-warning">Envoyer un mail</a></td>
             {% else %}
                 <td>{{participant.numLicence}}</td>
             {% endif %}
