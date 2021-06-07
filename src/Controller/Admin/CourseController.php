@@ -58,7 +58,7 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/{courseEnfant}", name="admin_reporter_course")
      */
-    public function reporterCourse(Circuit $courseEnfant): Response{
+    public function reporterCourse(Circuit $courseEnfant,MailerInterface $mailer, UserRepository $repo): Response{
         $em=$this->getDoctrine()->getManager();
         //je récupère la date de deux courses
         $Date = $courseEnfant->getDate();
@@ -72,6 +72,25 @@ class CourseController extends AbstractController
        /* $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
         $em->persist($courseAdulte);*/
         $em->flush(); 
+
+        //Ajout de touts les participants dans le tableau
+        $tabParticipants = $repo-> inscritCourse($courseEnfant);
+        // array_push($tabParticipants, $repo->inscritCourse($courseAdulte));
+
+        foreach($tabParticipants as $participant){
+        //construction et envoie du mail pour prévenir du changement de date
+            $email=(new Email())
+                ->from("projetmangopoec@gmail.com")
+                ->to($participant->getEmail())
+                ->subject("Numéro de licence")
+                ->text(
+                "Bonjour,  
+                merci de bien vouloir indiquer votre numéro le licence afin de pouvoir particier à la prochaine course de motocross.
+                Si celle-ci n'est pas indiqué la veille de l'évènement nous serons contraint d'anuler votre inscrition. 
+                En vous remerciant pour votre compréhension. 
+                Cordialement, l'équipe MX PARC");
+            $mailer->send($email);
+        }
 
         return $this->render('admin/course/test.html.twig', [
             'courseEnfant' => $courseEnfant,
