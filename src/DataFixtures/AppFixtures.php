@@ -39,12 +39,12 @@ class AppFixtures extends Fixture
         $manager->persist($circuit4);
 
         $circuit5 = new Circuit();
-        $circuit5->setDate(new DateTime("04/07/2021"))
+        $circuit5->setDate(new DateTime("07/04/2021"))
         ->setNbPlaces(75);
         $manager->persist($circuit5);
 
         $circuit6 = new Circuit();
-        $circuit6->setDate(new DateTime("04/07/2021"))
+        $circuit6->setDate(new DateTime("07/04/2021"))
         ->setNbPlaces(15);
         $manager->persist($circuit6);
 
