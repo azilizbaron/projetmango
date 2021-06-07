@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CourseController!{% endblock %}
+{% block title %}Page d'administrateur {% endblock %}
 
 {% block body %}
 <h1 class="text-center m-5">Page d'administration</h1>
@@ -29,14 +29,12 @@
         </tr>
         <tr>
         {% for course in courses %}
-            <td><a href="{{path('admin_reporter_course',{courseEnfant : course.id})}}">Reporter les courses</a></td>
+            <td><a href="{{path('admin_reporter_course',{course : course.id})}}">Reporter les courses</a></td>
         {% endfor %}
         </tr>
     </tbody>
 </table>
 
-
-<p>Replacer le nombre de place par nombre de places restantes</p>
-<p>Proposition : animation javascript pour confirmer avant de lancer la fonction</p>
+<a href="{{path('admin_ajouter_course')}}">Nouvelle course</a>
 
 {% endblock %}
