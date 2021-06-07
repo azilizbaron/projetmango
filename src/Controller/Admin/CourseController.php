@@ -60,17 +60,26 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/ajouter", name="admin_ajouter_course")
      */
-    public function ajouterCourse(EntityManagerInterface $em, Request $request){
+    public function ajouterCourse(EntityManagerInterface $em, Request $request, CircuitRepository $repo){
+
         $form = $this->createForm(CircuitType::class);
-        
+
         $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid()){
+        if($form->isSubmitted()){
            $circuit = new Circuit;
             $circuit->setDate($form->get("date")->getData());
             $circuit->setNbPlaces($form->get("nb_places")->getData());
             $em->persist($circuit);
             $em->flush();
+
+            $date = new DateTime();
+            // récupère les courses dont le mois et l'année correspondent à la date du jour
+         $courses = $repo->coursesAVenir($date->format('Y-m'));
+         return $this->render('admin/course/index.html.twig', [
+            'courses' => $courses,
+        ]);
         }
+
         return $this->render('admin/course/ajoutCourse.html.twig', [
             'form' => $form->createView(),
         ]);

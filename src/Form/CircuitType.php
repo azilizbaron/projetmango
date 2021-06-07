@@ -6,14 +6,20 @@ use App\Entity\Circuit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CircuitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
-            ->add('nb_places',null, ["choices"=>['15','75'],])
+            ->add('date', DateType::class,['widget'=>'single_text'])
+            ->add('nb_places',choiceType::class, [
+                "choices"=>[
+                    "15"=>15,
+                    "75"=>75]
+            ])
         ;
     }
 

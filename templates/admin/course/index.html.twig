@@ -24,17 +24,17 @@
         </tr>
         <tr>
         {% for course in courses %}
-            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}">Participants inscrits</a></td>
+            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}" class="btn btn-info">Participants inscrits</a></td>
         {% endfor %}
         </tr>
         <tr>
         {% for course in courses %}
-            <td><a href="{{path('admin_reporter_course',{course : course.id})}}">Reporter les courses</a></td>
+            <td><a href="{{path('admin_reporter_course',{course : course.id})}}" class="btn btn-warning">Reporter les courses</a></td>
         {% endfor %}
         </tr>
     </tbody>
 </table>
 
-<a href="{{path('admin_ajouter_course')}}">Nouvelle course</a>
+<a href="{{path('admin_ajouter_course')}}" class="btn btn-success">Nouvelle course</a>
 
 {% endblock %}
