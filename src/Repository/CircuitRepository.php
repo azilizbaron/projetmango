@@ -19,6 +19,23 @@ class CircuitRepository extends ServiceEntityRepository
         parent::__construct($registry, Circuit::class);
     }
 
+    //Retourne la course enfant et la course Adulte a venir
+    public function coursesAVenir($date) {
+       $conn = $this->getEntityManager()->getConnection();
+        $rawSql ="SELECT * FROM circuit where date like :date";
+        $params =array (':date' => $date.'-%');
+        $stmt = $conn->prepare($rawSql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(); 
+       /* $date = $date."-%";
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            ' SELECT id FROM App\Entity\Circuit where date like :date '
+        )->setParameter(':date', $date); 
+        return $query->getResult();*/
+
+    }
+
     // /**
     //  * @return Circuit[] Returns an array of Circuit objects
     //  */

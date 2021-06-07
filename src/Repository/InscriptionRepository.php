@@ -19,6 +19,19 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
+    //DELETE FROM inscription WHERE user_id = 107 and circuit_id = 60
+    public function deleteInscription($user, $course){
+        return $this->createQueryBuilder('i')
+        ->delete()
+        ->andWhere('i.user =:user')
+        ->setParameter('user', $user)
+        ->andWhere('i.circuit =:course')
+        ->setParameter('course', $course)
+        ->getQuery()
+        ->getResult();
+    }
+
+
     // /**
     //  * @return Inscription[] Returns an array of Inscription objects
     //  */

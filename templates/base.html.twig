@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link href="{{ asset('style.css') }}" type="text/css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link href="{{ asset('style.css') }}" type="text/css" rel="stylesheet">
 
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -25,7 +25,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-twitter"></i></a>
             </li>
             <li class="nav-item">
@@ -55,21 +55,27 @@
             </li>
             <!-- else la personne est connectée bouttons différents en twig-->
 
+            
+            <!-- if la personne connectée-->
+
+            
              <li class="nav-item">
-            <!-- if la personne non connectée-->
-                 <a class="nav-link" href="#">Déconnexion</a>
+                 <a class="nav-link" href="#">Mon_compte</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">W</a>
+                 <a class="nav-link" href="#">Déconnexion</a>
             </li>
+            
 
         </ul>
     </div>
 
 </nav>
 <div class="container">
-<div class="row pr-0 pl-0 pt-2 pb-2 col-12">
-<img src="{{ asset('img/Header.png') }}" alt="header">
+<div class="row mt-2 mb-2">
+<a class="px-0" href="{{path('accueil')}}"> <img src="{{ asset('img/Header.png')}}"  alt="header" class="img-fluid"> </a>
+
+
 </div>
 </div>
         {% endblock %}
@@ -83,36 +89,35 @@
 
         {% block footer %}
 <!-- Footer -->
-<footer class="bg-dark #403F4C text-center text-white">
-  <!-- Grid container -->
+<footer class="bg-light text-center text-white">
   <div class="container p-4">
-    <!-- Section: Social media -->
-    <section class="mb-4">
-      <!-- Facebook -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-facebook-f"></i></a>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class"row col-5">
 
-      <!-- Twitter -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-twitter"></i
-      ></a>
+                <a class="btn btn-outline-dark btn-floating m-1" href="#"><i class="bi bi-twitter" role="button"></i></a>
+                <a class="btn btn-outline-dark btn-floating m-1" href="#"><i class="bi bi-instagram" role="button"></i></a> 
+                <a class="btn btn-outline-dark btn-floating m-1" href="#"><i class="bi bi-facebook" role="button"></i></a> 
+                <a class="btn btn-outline-dark btn-floating m-1" href="#"><i class="bi bi-google" role="button"></i></a> 
+        </div>
+    <div>
+        <div class = "row pl-6 ml-5">
+                <a class="btn btn-outline-dark btn-floating m-1" href="#">Nous contacter<role="button"></a>
+        </div>
+    </div>
 
-      <!-- Google -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-google"></i
-      ></a>
-
-      <!-- Instagram -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-instagram"></i
-      ></a>
-
-    </section>
+    </nav>
 
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    Mentions légales
-    <a class="text-white" href="#"> </a>
+  <div class="text-center p-3 bg-secondary">
+    <div class="row col-2">
+        Mentions légales <a class="text-white" href="#"> </a>
+    </div>
+
+    <div class="row col-12">
+    <i class="fas fa-copyright"></i>
+    copyright
+
+    </div>
   </div>
   <!-- Copyright -->
          

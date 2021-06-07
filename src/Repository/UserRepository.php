@@ -36,4 +36,53 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function inscritCourse($idCourse){
+        //select * from user join inscription on user.id = inscription.user_id join circuit on circuit.id  = inscription.circuit_id
+        //where circuit.id = 56"
+        
+        return $this->createQueryBuilder('u')
+        ->leftJoin('u.inscriptions', 'i')
+        ->where('i.circuit =:idCourse')
+        ->setParameter('idCourse', $idCourse)
+        ->getQuery()
+        ->execute(); 
+
+
+      /*  $em = $this->getEntityManager();
+        $query = $em->createQuery("
+        select nom from App\Entity\User  as user
+        join App\Entity\Inscription as inscription 
+        join App\Entity\Circuit as circuit
+        where circuit = 56");
+        return $query->getResult();*/
+    }
+
+    // /**
+    //  * @return User[] Returns an array of User objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }

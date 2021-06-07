@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourseController!{% endblock %}
+
+{% block body %}
+<table class = "table text-center">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>Numéro de licence</th>
+            <th><a href="{{path('admin_pdf',{course : course.id})}}">pdf</a></th>
+        </tr>
+    </thead>
+    <tbody>     
+        {% for participant in participants %}
+        <tr>
+            <td>{{participant.nom}}</td>
+            <td>{{participant.prenom}}</td>
+            <td>{{participant.email}}</td>
+            {% if participant.numLicence == "" %}
+                <td><a href="{{path('admin_mail_licence',{user:participant.id, circuit: course.id})}}" class="btn btn-warning">Envoyer un mail</a></td>
+            {% else %}
+                <td>{{participant.numLicence}}</td>
+            {% endif %}
+            <td>
+                <form method="POST" action="{{path('admin_supprimer_participants', {user : participant.id, circuit :course.id })}}">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_token" value="{{csrf_token('SUP'~ participant.id ~ course.id)}}">
+                    <input type="submit" class= "btn btn-danger" value="Supprimer">
+                </form onSubmit= return confirm('Confirmer la suppression ?')>
+            </td>
+         </tr>   
+        {% endfor %}   
+    </tboby>
+</table>
+{% endblock %}

@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Inscription;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
 
 
 /**
@@ -88,7 +91,9 @@ class User implements UserInterface
     private $membre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user")
+     * 
+     * 
      */
     private $inscriptions;
 

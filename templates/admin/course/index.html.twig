@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourseController!{% endblock %}
+
+{% block body %}
+<h1 class="text-center m-5">Page d'administration</h1>
+<table class = "table text-center">
+    <thead>
+        <tr>
+            <th>Circuit Adulte</th>
+            <th>Circuit Enfant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% for course in courses %}
+        <!-- Mettre le nombre de place restantes-->
+            <td>Nombre de place : {{course.nb_places}} </td>
+        <!-- Mettre le nombre de personnes en liste d'attente -->
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td>Date de la course : {{course.date | date("d/m/y")}} </td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}">Participants inscrits</a></td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+<!-- Reporter les courses -->
+ <!-- faire une validation en JS -->
+<form action="{{path('admin_reporter_course',{courseEnfant : courses[0]["id"], courseAdulte : courses[1]["id"]})}}">
+    <input type="submit" class= "btn btn-primary" value="Reporter les courses">
+</form>
+{% endblock %}
