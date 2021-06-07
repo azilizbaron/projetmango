@@ -10,8 +10,10 @@ use App\Repository\CircuitRepository;
 use App\Repository\UserRepository;
 use App\Entity\Circuit;
 use App\Entity\User;
+use App\Form\CircuitType;
 use App\Repository\InscriptionRepository;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
@@ -56,29 +58,64 @@ class CourseController extends AbstractController
     }
     
     /**
-     * @Route("/admin/course/{courseEnfant}/{courseAdulte}", name="admin_reporter_course")
+     * @Route("/admin/course/ajouter", name="admin_ajouter_course")
      */
-    public function reporterCourse(Circuit $courseEnfant, Circuit $courseAdulte): Response{
-        $em=$this->getDoctrine()->getManager();
-        //je récupère la date de deux courses
-        $Date = $courseEnfant->getDate();
-        //j'avance la date de 7 jours
-        $nouvelleDate = date_modify($Date,'+7 day');
-        //Je met a jour la date
-        $courseEnfant->setDate($nouvelleDate);
+    public function ajouterCourse(EntityManagerInterface $em, Request $request, CircuitRepository $repo){
 
-        $em->persist($courseEnfant);
+        $form = $this->createForm(CircuitType::class);
 
-        //même chose pour les adulte mais en condencer
-        $courseAdulte->setDate(date_modify($courseAdulte->getDate(),'+7 day'));
-        $em->persist($courseAdulte);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+           $circuit = new Circuit;
+            $circuit->setDate($form->get("date")->getData());
+            $circuit->setNbPlaces($form->get("nb_places")->getData());
+            $em->persist($circuit);
+            $em->flush();
 
-        $em->flush(); 
-
-        return $this->render('admin/course/test.html.twig', [
-            'courseEnfant' => $courseEnfant,
+            $date = new DateTime();
+            // récupère les courses dont le mois et l'année correspondent à la date du jour
+         $courses = $repo->coursesAVenir($date->format('Y-m'));
+         return $this->render('admin/course/index.html.twig', [
+            'courses' => $courses,
         ]);
-       // return $this->redirectToRoute('admin_consulter_course');
+        }
+
+        return $this->render('admin/course/ajoutCourse.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/course/{course}", name="admin_reporter_course")
+     */
+    public function reporterCourse(Circuit $course,MailerInterface $mailer, UserRepository $repo, EntityManagerInterface $em){
+       $date = $course->getDate();
+       $date2= date_modify($date,'+1 week');
+       $date2 = new \DateTime( $date->format("Y-m-d"));
+       $course-> setDate($date2);
+       $em->persist($course);
+       $em->flush();
+
+        //Ajout de touts les participants dans le tableau
+       $tabParticipants = $repo->inscritCourse($course);
+
+      foreach($tabParticipants as $participant){
+        //construction et envoie du mail pour prévenir du changement de date
+            $email=(new Email())
+                ->from("projetmangopoec@gmail.com")
+                ->to($participant->getEmail())
+                ->subject("Numéro de licence")
+                ->text(
+                "Bonjour,
+                La course à laqu'elle vous vous êtes inscrit viens d'être reportée d'une semaine.
+                En vous remerciant de votre compréhension.
+                Cordialement, l'équipe MX PARC");
+            $mailer->send($email);
+        }
+
+        return $this->render('admin/course/index.html.twig', [
+            'courses' => $course,
+        ]);
     }
 
     /**

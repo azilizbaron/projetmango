@@ -1,8 +1,11 @@
-  .test{
-    background-color: teal;
-    color: white;
-    margin-top: 2%;
-    margin-left: 0%;
-    margin-right: 0%;
-    
+  .test {
+      background-color: teal;
+      color: white;
+      margin-top: 2%;
+      margin-left: 0%;
+      margin-right: 0%;
+  }
+  
+  .mentionslegales {
+      text-align: left;
   }

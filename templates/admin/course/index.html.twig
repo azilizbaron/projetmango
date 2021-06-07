@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CourseController!{% endblock %}
+{% block title %}Page d'administrateur {% endblock %}
 
 {% block body %}
 <h1 class="text-center m-5">Page d'administration</h1>
@@ -26,14 +26,16 @@
         </tr>
         <tr>
         {% for course in courses %}
-            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}">Participants inscrits</a></td>
+            <td><a href="{{path('admin_consulter_participants', {course : course.id})}}" class="btn btn-info">Participants inscrits</a></td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for course in courses %}
+            <td><a href="{{path('admin_reporter_course',{course : course.id})}}" class="btn btn-warning">Reporter les courses</a></td>
         {% endfor %}
         </tr>
     </tbody>
 </table>
-<!-- Reporter les courses -->
- <!-- faire une validation en JS -->
-<form action="{{path('admin_reporter_course',{courseEnfant : courses[0]["id"], courseAdulte : courses[1]["id"]})}}">
-    <input type="submit" class= "btn btn-primary" value="Reporter les courses">
-</form>
+
+<a href="{{path('admin_ajouter_course')}}" class="btn btn-success">Nouvelle course</a>
 {% endblock %}
