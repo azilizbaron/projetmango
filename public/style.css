@@ -9,3 +9,11 @@
   .mentionslegales {
       text-align: left;
   }
+
+  .calendrier{
+      width: 60%;
+  }
+
+  .section{
+      border-top: solid 0.5px #40404c;
+  }
