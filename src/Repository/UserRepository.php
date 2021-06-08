@@ -48,7 +48,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->orderBy('i.dateInscription', 'ASC')
         ->getQuery()
         ->execute(); 
-
     }
 
     public function inscritCourseListeAttente($idCourse){
@@ -64,6 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getQuery()
         ->execute(); 
     }
+
 
     // /**
     //  * @return User[] Returns an array of User objects

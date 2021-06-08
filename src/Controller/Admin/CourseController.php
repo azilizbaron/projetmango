@@ -192,14 +192,14 @@ class CourseController extends AbstractController
     public function genererPdf(UserRepository $repo, Circuit $course ){
         // les participants à la course
         $tabParticipants = $repo-> inscritCourse($course);
-
         //création du pdf
         $dompdf= new Dompdf();
 
         //récupération de la vue    
         $html = $this->renderView("admin/course/pdf.html.twig", [
             "participants" => $tabParticipants,
-            "date" => $course->getDate()
+            "date" => $course->getDate(),
+            "places" => $course->getNbPlaces()
         ]);
         
         //passer du html au pdf
@@ -238,7 +238,5 @@ class CourseController extends AbstractController
             "course" => $circuit, 
             "places"=> $circuit->getNbPlaces()
         ]);
-    }
-    
-   
+    }  
 }

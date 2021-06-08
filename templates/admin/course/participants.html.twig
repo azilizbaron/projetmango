@@ -17,12 +17,12 @@
     
         {% set i = 0%}
         {% for participant in participants %}
-        {% set i = i + 1 %}
-        {% if i > places %}
-        <tr class="table-danger">
-        {% else %}
-        <tr>
-        {% endif %}
+            {% set i = i + 1 %}
+            {% if i > places %}
+                <tr class="table-danger">
+            {% else %}
+                <tr>
+            {% endif %}
             <td>{{participant.nom}}</td>
             <td>{{participant.prenom}}</td>
             <td>{{participant.email}}</td>
@@ -40,7 +40,6 @@
             </td>
          </tr>   
         {% endfor %} 
-          {{ dump(i) }}
     </tboby>
 </table>
 {% endblock %}
