@@ -56,14 +56,22 @@ class AccueilController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $inscription = new Inscription();
+
+        // récupération de l'objet circuit concerné
         $id = $request->request->get("course");
         $circuit = $entityManager->find(Circuit::class, $id);
+
+        //ajout des informations dans l'objet inscription
         $inscription->setUserId($this->getUser());
         $inscription->setCircuitId($circuit);
         $date = new DateTime();
         $inscription->setDateInscription($date->setTimezone(new DateTimeZone('Europe/Paris')));
+
+        //envoie dans la BDD
         $entityManager->persist($inscription);
         $entityManager->flush();
+
+
         return $this->redirectToRoute('accueil');
     }
 }
