@@ -38,23 +38,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function inscritCourse($idCourse){
         //select * from user join inscription on user.id = inscription.user_id join circuit on circuit.id  = inscription.circuit_id
-        //where circuit.id = 56"
+        //where circuit.id = 56 order by user.membre DESC, inscription.date_inscription ASC"
         
         return $this->createQueryBuilder('u')
         ->leftJoin('u.inscriptions', 'i')
         ->where('i.circuit =:idCourse')
         ->setParameter('idCourse', $idCourse)
+        ->orderBy('u.membre', 'DESC')
+        ->orderBy('i.dateInscription', 'ASC')
         ->getQuery()
         ->execute(); 
 
+    }
 
-      /*  $em = $this->getEntityManager();
-        $query = $em->createQuery("
-        select nom from App\Entity\User  as user
-        join App\Entity\Inscription as inscription 
-        join App\Entity\Circuit as circuit
-        where circuit = 56");
-        return $query->getResult();*/
+    public function inscritCourseListeAttente($idCourse){
+        //select user.id, inscritipn.listeAttente from user join inscription on user.id = inscription.user_id join circuit on circuit.id  = inscription.circuit_id
+        //where circuit.id = 56 order by user.membre DESC, inscription.date_inscription ASC"
+        return $this->createQueryBuilder('u')
+        ->select('u.id , i.listeAttente')
+        ->leftJoin('u.inscriptions', 'i')
+        ->where('i.circuit =:idCourse')
+        ->setParameter('idCourse', $idCourse)
+        ->orderBy('u.membre', 'DESC')
+        ->orderBy('i.dateInscription', 'ASC')
+        ->getQuery()
+        ->execute(); 
     }
 
     // /**
