@@ -22,10 +22,10 @@
         </tr>
     </thead>
     <tbody>     
-        {% for participant in participants %}
+        {% for i in 0.. places %}
         <tr>
-            <td>{{participant.nom}}</td>
-            <td>{{participant.prenom}}</td>
+            <td>{{participants[i].nom}}</td>
+            <td>{{participants[i].prenom}}</td>
             <td></td>
          </tr>   
         {% endfor %}   
