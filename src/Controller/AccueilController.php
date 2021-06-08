@@ -46,9 +46,12 @@ class AccueilController extends AbstractController
             }
 
             $courses = $repo->coursesAVenir($nouvelleDate);
+            $dateCourse = new DateTime($courses[0]['date']);
+
         }
         return $this->render('accueil/index.html.twig', [
             'courses' => $courses,
+            'dateCourse' => $dateCourse->format('d-m-Y'),
         ]);
     }
 
