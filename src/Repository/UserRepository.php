@@ -64,6 +64,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->execute(); 
     }
 
+    /**
+     * Recherche les personnes en fonction du formulaire
+     */
+    public function search($mot){
+        return $this->createQueryBuilder('u')
+            ->setParameter('mot',$mot)
+            ->where('u.nom like :mot ')
+            ->orWhere('u.prenom like :mot ')
+            ->orWhere('u.email like :mot ')
+             ->setParameter('mot','%'.$mot.'%')
+            ->getQuery()
+            ->execute();
+    }
+
 
     // /**
     //  * @return User[] Returns an array of User objects

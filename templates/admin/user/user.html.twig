@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{user.nom}} {{user.prenom}}{% endblock %}
+
+{% block body %}
+<h1 class="text-center m-5">{{user.prenom}} {{user.nom}}</h1>
+<ul class="list-group text-center">
+    <li class="list-group-item">Email : {{user.email}}</li>
+    <li class="list-group-item">Téléphone : {{user.tel}}</li>
+    <li class="list-group-item">Adresse : {{user.adresse}} {{user.cp}}  {{user.ville}}</li>
+    <li class="list-group-item">Date de naissance : {{user.dateNaissance | date("d/m/y")}}</li>
+    <li class="list-group-item">Numéro de licence : {{user.numLicence}}</li>
+    {% if user.membre == 0 %}
+        <li class="list-group-item"><a href="" class="btn btn-warning">Devenir membre</a></li>
+    {% else %}
+        <li class="list-group-item"><a href="" class="btn btn-warning">Ne plus être membre</a></li>
+    {% endif %}
+     <li class="list-group-item"><a href="" class="btn btn-danger">Supprimer compte</a></li>
+</ul>
+
+{% endblock %}
