@@ -14,8 +14,15 @@
         </tr>
     </thead>
     <tbody>     
+    
+        {% set i = 0%}
         {% for participant in participants %}
+        {% set i = i + 1 %}
+        {% if i > places %}
+        <tr class="table-danger">
+        {% else %}
         <tr>
+        {% endif %}
             <td>{{participant.nom}}</td>
             <td>{{participant.prenom}}</td>
             <td>{{participant.email}}</td>
@@ -32,7 +39,8 @@
                 </form onSubmit= return confirm('Confirmer la suppression ?')>
             </td>
          </tr>   
-        {% endfor %}   
+        {% endfor %} 
+          {{ dump(i) }}
     </tboby>
 </table>
 {% endblock %}

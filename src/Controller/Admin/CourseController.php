@@ -126,7 +126,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repo-> inscritCourse($course);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $course 
+            "course" => $course, 
+            "places"=> $course->getNbPlaces()
         ]);
     }
 
@@ -180,7 +181,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repoU-> inscritCourse($circuit);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $circuit 
+            "course" => $circuit,
+            "places"=> $circuit->getNbPlaces()
         ]);
     }
 
@@ -233,7 +235,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repo-> inscritCourse($circuit);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $circuit 
+            "course" => $circuit, 
+            "places"=> $circuit->getNbPlaces()
         ]);
     }
     
