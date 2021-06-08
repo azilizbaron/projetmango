@@ -3,6 +3,7 @@
 {% block title %}Ajout d'une course{% endblock %}
 
 {% block body %}
+<a href="{{path("admin_consulter_course")}}"><i class="fas fa-arrow-left"></i></a>
     {{form_start(form)}}
         {{form_row(form.date, {"label" : "Date de l'évènement :"})}}
         {{form_row(form.nb_places, {"label": "Nombre de participants : "})}}
