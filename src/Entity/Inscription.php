@@ -36,6 +36,11 @@ class Inscription
      */
     private $dateInscription;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $listeAttente;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +78,18 @@ class Inscription
     public function setDateInscription(\DateTimeInterface $dateInscription): self
     {
         $this->dateInscription = $dateInscription;
+
+        return $this;
+    }
+
+    public function getListeAttente(): ?bool
+    {
+        return $this->listeAttente;
+    }
+
+    public function setListeAttente(bool $listeAttente): self
+    {
+        $this->listeAttente = $listeAttente;
 
         return $this;
     }
