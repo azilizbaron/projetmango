@@ -133,13 +133,49 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/supp/{user}/{circuit}", name="admin_supprimer_participants" , methods ="delete")
      */
-    public function supprimerParticipants(InscriptionRepository $repoI, User $user, Circuit $circuit, Request $request, UserRepository $repoU){
+    public function supprimerParticipants(InscriptionRepository $repoI, UserRepository $repoU, User $user, Circuit $circuit, 
+    Request $request, EntityManagerInterface $em, MailerInterface $mailer){
 
         //Pour la sécurité on vérifie si avec la requête de supression, on a bien le token
         if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
             $repoI->deleteInscription($user, $circuit);
         }
     
+        //gestion de la liste d'attente 
+        //récupération de la liste des inscrits
+        $tabParticipants= $repoU->inscritCourseListeAttente($circuit);
+        //récupération de la personne avec un 1 dans liste d'attente
+        foreach($tabParticipants as $participant){
+            if($participant["listeAttente"]==1){
+                
+               //On récupère les informations liée à la table inscription
+               $participantI= $repoI->findOneBy(["user" =>$participant["id"]]);
+               $inscription=$repoI->find($participantI);
+                //on remplace le 1 par un 0
+               $inscription->setListeAttente(0);
+              
+               //On sauvegarde
+               $em->persist($inscription);
+               $em->flush();             
+
+               //Consutruction du mail 
+               //On récupère les informations liées à la table user
+               $participantU=$repoU->find($participant["id"]);
+               //envoie du mail 
+               $email=(new Email())
+                ->from("projetmangopoec@gmail.com")
+                ->to($participantU->getEmail())
+                ->subject("Inscritpion à la course")
+                ->text(
+                "Bonjour,  
+                nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
+                Cordialement, l'équipe MX PARC". $participantU->getEmail());
+                $mailer->send($email);
+                
+                break;
+            }  
+        }
+      
         //récupération des données pour envoyer la vue
         $tabParticipants = $repoU-> inscritCourse($circuit);
         return $this->render('admin/course/participants.html.twig',[
