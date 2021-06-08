@@ -11,12 +11,15 @@ use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccueilController extends AbstractController
 {
     /**
-     * @Route("/accueil", name="accueil")
+     * @Route("/", name="accueil")
      */
     public function index(CircuitRepository $repo): Response
     {
@@ -52,24 +55,62 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil/inscription", name="inscriptionCourse")
      */
-    public function inscriptionCourse(Request $request)
+    public function inscriptionCourse(Request $request, MailerInterface $mailer)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $inscription = new Inscription();
+        //si utilisateur connecté enregistrement de l'inscription dans la BDD
+        // sinon redirection à la page connection
+        if($this->getUser()){
 
-        // récupération de l'objet circuit concerné
-        $id = $request->request->get("course");
-        $circuit = $entityManager->find(Circuit::class, $id);
+            $entityManager = $this->getDoctrine()->getManager();
+            $inscription = new Inscription();
 
-        //ajout des informations dans l'objet inscription
-        $inscription->setUserId($this->getUser());
-        $inscription->setCircuitId($circuit);
-        $date = new DateTime();
-        $inscription->setDateInscription($date->setTimezone(new DateTimeZone('Europe/Paris')));
+            // récupération de l'objet circuit concerné
+            $id = $request->request->get("course");
+            $circuit = $entityManager->find(Circuit::class, $id);
 
-        //envoie dans la BDD
-        $entityManager->persist($inscription);
-        $entityManager->flush();
+            // on vérifie si l'utilisateur est déjà inscrit à la course
+            $repository = $this->getDoctrine()->getRepository(Inscription::class);
+            $insc = $repository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'circuit' => $id,
+            ]);
+
+            if($insc){
+                //affiche du message 'déjà inscrit'
+                $this->addFlash('success', 'Inscription déjà réalisée');
+            }else{
+                
+                //ajout des informations dans l'objet inscription
+                $inscription->setUserId($this->getUser());
+                $inscription->setCircuitId($circuit);
+                $date = new DateTime();
+                $inscription->setDateInscription($date->setTimezone(new DateTimeZone('Europe/Paris')));
+                $inscription->setListeAttente(0);
+
+                //envoie dans la BDD
+                $entityManager->persist($inscription);
+                $entityManager->flush();
+
+                //message de confirmation
+                $this->addFlash('success', 'Inscription réussie');
+
+                //envoie du mail de confirmation
+                $email=(new Email())
+                    ->from("projetmangopoec@gmail.com")
+                    //->to($this->getUser()->getEmail())
+                    ->to('azilizba@gmail.com')
+                    ->subject("Confirmation inscription à la prochaine course")
+                    ->text(
+                    "Bonjour,
+                    Vous êtes bien inscrit à la course du ".$circuit->getdate()->format('d-m-Y')."
+                    Cordialement, l'équipe MX PARC");
+                $mailer->send($email);
+            }
+
+        }else{
+            return $this->redirectToRoute('app_login');
+        }
+        
 
 
         return $this->redirectToRoute('accueil');
