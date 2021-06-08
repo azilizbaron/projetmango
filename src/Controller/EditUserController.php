@@ -28,11 +28,14 @@ class EditUserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            return $this->redirectToRoute('edit_user');
+
+        }
 
             return $this->render('edit_user/index.html.twig', [
                 'editForm' => $form->createView()
             ]);
-        }
+        
     }
 
 
