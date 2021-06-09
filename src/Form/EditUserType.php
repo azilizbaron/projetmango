@@ -45,6 +45,12 @@ class EditUserType extends AbstractType
             'label' => 'Téléphone',
             'data' => $user->getTel()
         ])
+        ->add('Adresse', null, [
+            'data' => $user->getAdresse()
+        ])
+        ->add('cp', null, [
+            'data' => $user->getCp()
+        ])
         ->add('ville', null, [
             'data' => $user->getVille()
         ])

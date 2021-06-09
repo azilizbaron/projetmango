@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'administrateur {% endblock %}
+{% block title %}Administration courses{% endblock %}
 
 {% block body %}
-<h1 class="text-center m-5">Page d'administration</h1>
+<h1 class="text-center m-5">Page d'administration des courses</h1>
+<a href="{{path('admin_ajouter_course')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
 <table class = "table text-center">
     <thead>
         <tr>
@@ -37,5 +38,4 @@
     </tbody>
 </table>
 
-<a href="{{path('admin_ajouter_course')}}" class="btn btn-success">Nouvelle course</a>
 {% endblock %}

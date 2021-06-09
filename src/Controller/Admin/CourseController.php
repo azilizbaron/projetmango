@@ -126,7 +126,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repo-> inscritCourse($course);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $course 
+            "course" => $course, 
+            "places"=> $course->getNbPlaces()
         ]);
     }
 
@@ -180,7 +181,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repoU-> inscritCourse($circuit);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $circuit 
+            "course" => $circuit,
+            "places"=> $circuit->getNbPlaces()
         ]);
     }
 
@@ -190,14 +192,14 @@ class CourseController extends AbstractController
     public function genererPdf(UserRepository $repo, Circuit $course ){
         // les participants à la course
         $tabParticipants = $repo-> inscritCourse($course);
-
         //création du pdf
         $dompdf= new Dompdf();
 
         //récupération de la vue    
         $html = $this->renderView("admin/course/pdf.html.twig", [
             "participants" => $tabParticipants,
-            "date" => $course->getDate()
+            "date" => $course->getDate(),
+            "places" => $course->getNbPlaces()
         ]);
         
         //passer du html au pdf
@@ -233,9 +235,8 @@ class CourseController extends AbstractController
         $tabParticipants = $repo-> inscritCourse($circuit);
         return $this->render('admin/course/participants.html.twig',[
             "participants" => $tabParticipants,
-            "course" => $circuit 
+            "course" => $circuit, 
+            "places"=> $circuit->getNbPlaces()
         ]);
-    }
-    
-   
+    }  
 }

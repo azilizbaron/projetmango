@@ -1,4 +1,4 @@
-  .test {
+      .test {
       background-color: teal;
       color: white;
       margin-top: 2%;
@@ -33,4 +33,9 @@
       margin-bottom: 3%;
       font-size: 1.4rem;
       color: white;
-  }
+      .calendrier {
+          width: 60%;
+      }
+      .section {
+          border-top: solid 0.5px #40404c;
+      }

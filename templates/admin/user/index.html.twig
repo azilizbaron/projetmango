@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<h1 class="text-center m-5">Page d'administration des inscrits</h1>
+
+{{form_start(form)}}
+{{form_end(form)}}
+
+{% if users is not null %}
+    
+
+<table class = "table text-center">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody> 
+        {% for user in users %}
+        <tr>     
+            <td>{{user.nom}}</td>
+            <td>{{user.prenom}}</td>
+            <td>{{user.email}}</td>
+            <td><a href="{{path('admin_voir_user',{user: user.id})}}"><i class="fas fa-info-circle"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tboby>
+</table>
+{% endif %}
+{% endblock %}

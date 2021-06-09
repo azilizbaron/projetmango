@@ -2,16 +2,24 @@
 
 {% block body %}
   <section class="row">
-    <div class="col-6 ml-5 mt-5">
-      <h2>Prochain évènement</h2>
-      <p class='mt-3'>Pour vous inscrire à la prochaine course, veuillez-vous connecter. Vous pouvez vous créer un compte si ce n'est pas déjà fait !</p>
-      <div class="text-center">
+    <div class="col-12 col-lg-6 mt-5">
+      {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+      {% endfor %}
+      <h2>Prochain évènement le
+        {{ dateCourse }}</h2>
+      <p class='mt-5'>Pour vous inscrire à la prochaine course, veuillez-vous connecter. Vous pouvez vous créer un compte si ce n'est pas déjà fait !</p>
+      <div class="text-center mt-5">
         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalInscription">
           S'inscrire
         </button>
-
       </div>
+    </div>
 
+    <div class="col-12 col-lg-6 mt-5 text-center">
+      <img class="img-fluid calendrier" src="{{ asset('img/calendrier.png')}}" alt="carte">
     </div>
   </section>
 
@@ -51,5 +59,70 @@
       </div>
     </div>
   </div>
+
+  <section class="row section mt-5">
+    <div class="col-12 col-lg-6 mt-5 text-center">
+      <h2>Où sommes-nous ?</h2>
+      <p>Vous pouvez nous retrouver près du parc des Gayeulles,<strong>
+          12J Rue du Patis Tatelin, 35700 Rennes</strong>
+      </p>
+
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.83724161524!2d-1.6409907850054444!3d48.132662059483295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480ede93effce075%3A0x504cbdbf797e88ae!2sib%20-%20groupe%20Cegos%20Rennes!5e0!3m2!1sfr!2sfr!4v1623153461214!5m2!1sfr!2sfr" width="100%" height="70%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="col-12 col-lg-6 mt-5 text-center">
+      <img class="img-fluid" src="{{ asset('img/bike.jpg')}}" alt="bike">
+    </div>
+  </section>
+
+  <section class="row text-center section mt-5 pr-2">
+    <h2 class="display-4">
+      <strong>Devenez membre !</strong>
+    </h2>
+    <p class="mt-5">Vous pouvez devenir membre du club en cliquant sur le bouton ci-dessous,<br>vous deviendrez ainsi prioritaire sur les courses !</p>
+    <div class="text-center mt-3">
+      <button type="button" class="btn btn-secondary">Adhérer</button>
+    </div>
+  </section>
+  <section class="row section mt-5">
+  <div class="text-center mt-5">
+    <h2>Evenements passés</h2>
+    <p>Retrouver ci-dessous les photos des évènements passés des quatre derniers mois</p>
+  </div>
+
+    <div class='card-deck'>
+    <div class="card col-lg-3 p-0 col-12 mr-lg-3 mt-3" style="width: 18rem;">
+      <img class="card-img-top" src="{{ asset('img/motocross1.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Course du 07/03/2021 </h5>
+        <p class="card-text">Journée de reprise des courses après la pause hivernale</p>
+      </div>
+    </div>
+
+    <div class="card col-lg-3 p-0 col-12 mr-lg-3 mt-3" style="width: 18rem;">
+      <img class="card-img-top" src="{{ asset('img/motocross2.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Course du 04/04/2021 </h5>
+        <p class="card-text">Plein de nouveaux venus qui ont été très bien accueilli</p>
+      </div>
+    </div>
+
+    <div class="card col-lg-3 p-0 col-12 mr-lg-3 mt-3" style="width: 18rem;">
+      <img class="card-img-top" src="{{ asset('img/motocross3.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Course du 02/05/2021 </h5>
+        <p class="card-text">Bravo aux enfants qui ont fait de super belles performances</p>
+      </div>
+    </div>
+
+    <div class="card col-lg-3 p-0 col-12 mt-3" style="width: 18rem;">
+      <img class="card-img-top" src="{{ asset('img/motocross4.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Course du 06/06/2021</h5>
+        <p class="card-text">Temps magnifique ce dimanche, et de très belles performances</p>
+      </div>
+    </div>
+    </div>
+</section>
 
 {% endblock %}
