@@ -92,8 +92,8 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="user")
-     * 
-     * 
+     * @ORM\JoinColumn(name="inscription_id", referencedColumnName="id", onDelete="CASCADE")
+     * cascade{"persist","remove"}
      */
     private $inscriptions;
 

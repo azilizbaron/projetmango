@@ -140,6 +140,7 @@ class CourseController extends AbstractController
         //Pour la sécurité on vérifie si avec la requête de supression, on a bien le token
         if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
             $repoI->deleteInscription($user, $circuit);
+            //envoyer un mail 
         }
     
         //gestion de la liste d'attente 
