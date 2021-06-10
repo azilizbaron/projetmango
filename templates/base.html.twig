@@ -55,12 +55,11 @@
     {% else %}
     {% endif %}
 {# Onglet inscription uniquement pour les non authentifiés #}
-    {% if is_granted('IS_ANONYMOUS,ROLE_ADMIN')%}
+
            <li class="nav-item">
-                <a class="nav-link" href="/projetmango/public/register">Inscription</a>
+                <a class="nav-link" href=""{{ path('app_register')}}">Inscription</a>
             </li>  
-   {% else %}
-   {% endif %}
+  
 {# Onglet admin uniquement pour l'admin #}
    {% if is_granted('ROLE_ADMIN') %}       
         <li class="nav-item">
@@ -71,7 +70,7 @@
   {% if is_granted('IS_ANONYMOUS')%}
   {% else %}
              <li class="nav-item">
-                 <a class="nav-link" onMouseOver="Mon compte" href="/projetmango/public/edit/user"><i class="far fa-user-circle fa-2x"></i></a>
+                 <a class="nav-link" onMouseOver="Mon compte" href="{{ path('edit_user')}}"><i class="far fa-user-circle fa-2x"></i></a>
             </li>
   {% endif %}
   {# Onglet Déconnexion pour tout le monde sauf les non connectés #}
@@ -115,19 +114,20 @@
                 <a class="btn btn-outline-dark btn-floating m-1" href="#"><i class="bi bi-google" role="button"></i></a> 
         </div>
     <div class="navbar-nav ml-auto">>
-                <a class="btn btn-outline-dark btn-floating m-1" href="#">Nous contacter<role="button"></a>
+                <a class="btn btn-outline-dark btn-floating m-1" href="/projetmango/public/contact">Nous contacter<role="button"></a>
         
     </div>
 
     </nav>
 
-  <!-- Copyright -->
+
   <div class="text-center p-3 bg-secondary">
   
         Mentions légales <a class="text-white" href="#"> </a>
+         <p>&#x1F96D; Mango Team</p>
   </div>
-  <!-- Copyright -->
-         
+  
+    
         {% endblock %}
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
