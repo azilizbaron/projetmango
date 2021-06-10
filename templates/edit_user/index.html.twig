@@ -3,7 +3,11 @@
 {% block title %}Hello EditUserController!{% endblock %}
 
 {% block body %}
-
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class='container'>
         <div class='row'>
             <div class='offset-3 col-6'>
@@ -15,10 +19,21 @@
                     <button type="submit" class="btn btn-secondary">
                         Valider
                     </button>
-                </div>
-                
+                </div>          
                 {# </form>  #}
                 {{ form_end(editForm) }}     
+            </div>
+           <div class='offset-3 col-6 mt-3 text-center'>
+           {% if inscriptionDate != null %}
+               <h2>Dernière course à laquelle je suis inscrit </h2>
+                {{inscriptionDate | date("d/m/Y")}}
+                <form method="POST" action="{{path('edit_user')}}">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_token" value="{{ csrf_token('SUP'~ inscriptionId) }}">
+                    <input type="submit" class="btn btn-danger" value="Se désinscrire"></input>
+                </form>
+           {% endif %}
+                
             </div>
         </div>
     </div>
