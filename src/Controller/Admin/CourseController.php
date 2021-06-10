@@ -141,6 +141,16 @@ class CourseController extends AbstractController
         if ($this->isCsrfTokenValid("SUP".$user->getId().$circuit->getId(), $request->request->get('_token'))) {
             $repoI->deleteInscription($user, $circuit);
             //envoyer un mail 
+            $emailSupp=(new Email())
+                ->from("projetmangopoec@gmail.com")
+                ->to($user->getEmail())
+                ->subject("Désinscrit de la course")
+                ->text(
+                "Bonjour,  
+                Nous somment au regret de vous annoncer que vous n'êtes plus inscrit à la prochaine course. 
+                Pour plus d'informations, merci de vous référer aux administrateurs. 
+                Cordialement, l'équipe MX PARC");
+                $mailer->send($emailSupp);
         }
     
         //gestion de la liste d'attente 
@@ -164,15 +174,15 @@ class CourseController extends AbstractController
                //On récupère les informations liées à la table user
                $participantU=$repoU->find($participant["id"]);
                //envoie du mail 
-               $email=(new Email())
+               $emailInscrit=(new Email())
                 ->from("projetmangopoec@gmail.com")
                 ->to($participantU->getEmail())
                 ->subject("Inscritpion à la course")
                 ->text(
                 "Bonjour,  
                 nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
-                Cordialement, l'équipe MX PARC". $participantU->getEmail());
-                $mailer->send($email);
+                Cordialement, l'équipe MX PARC");
+                $mailer->send($emailInscrit);
                 
                 break;
             }  
