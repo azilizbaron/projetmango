@@ -36,6 +36,19 @@ class CircuitRepository extends ServiceEntityRepository
 
     }
 
+    //SELECT circuit.date from circuit join inscription on 
+    //circuit.id = inscription.circuit_id join user on user.id = inscription.user_id where user.id like 1086
+    public function derniereCourseInscrit($idUser){
+        return $this->createQueryBuilder('c')
+        ->select('i.id as idInscription','c.date','c.id as idCourse')
+        ->leftJoin('c.inscriptions', 'i')
+        ->where('i.user =:user')
+        ->setParameter('user',$idUser)
+      //  ->orderBy('ASC')
+        ->getQuery()
+        ->execute();
+    }
+
     // /**
     //  * @return Circuit[] Returns an array of Circuit objects
     //  */

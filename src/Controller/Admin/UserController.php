@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\RechercheUserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,5 +43,16 @@ class UserController extends AbstractController
         return $this->render('admin/user/user.html.twig',[
             'user'=> $user
         ]);
+    }
+
+    /**
+     * @Route("admin/user/supprimer/{user}", name="admin_supprimer_user", methods="delete")
+     */
+    public function supprimer_user(User $user, Request $request, EntityManagerInterface $em): Response{
+        if($this->isCsrfTokenValid("SUP".$user->getId(), $request->request->get('_token'))){
+            $em->remove($user);
+            $em->flush();
+        }
+        return $this->redirectToRoute('admin_user');
     }
 }

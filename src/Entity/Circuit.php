@@ -31,7 +31,7 @@ class Circuit
     private $nb_places;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="circuit_id")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="circuit")
      * @Assert\Choice({"15","75"})
      */
     private $inscriptions;
