@@ -1,41 +1,41 @@
-          .test {
-          background-color: teal;
-          color: white;
-          margin-top: 2%;
-          margin-left: 0%;
-          margin-right: 0%;
-      }
-      
-      .mentionslegales {
-          text-align: left;
-      }
-      
-      .formcontact_fond {
-          background-color: rgb(219, 217, 217);
-          margin-top: 2%;
-          margin-bottom: 4%;
-          border-top-left-radius: 80px 80px;
-          border-top-right-radius: 80px 80px;
-          border-bottom-left-radius: 80px 80px;
-          border-bottom-right-radius: 80px 80px;
-      }
-      
-      h1 {
-          text-align: center;
-          padding-top: 3%;
-          padding-bottom: 3%;
-      }
-      
-      .formcontact_petit {
-          background-color: #0E9594;
-          border-radius: 2%;
-          margin-left: 2%;
-          margin-bottom: 3%;
-          font-size: 1.4rem;
-          color: white;
-          .calendrier {
-              width: 60%;
+              .test {
+              background-color: teal;
+              color: white;
+              margin-top: 2%;
+              margin-left: 0%;
+              margin-right: 0%;
           }
-          .section {
-              border-top: solid 0.5px #40404c;
+          
+          .mentionslegales {
+              text-align: left;
           }
+          
+          .formcontact_fond {
+              background-color: rgb(219, 217, 217);
+              margin-top: 2%;
+              margin-bottom: 4%;
+              border-top-left-radius: 80px 80px;
+              border-top-right-radius: 80px 80px;
+              border-bottom-left-radius: 80px 80px;
+              border-bottom-right-radius: 80px 80px;
+          }
+          
+          h1 {
+              text-align: center;
+              padding-top: 3%;
+              padding-bottom: 3%;
+          }
+          
+          .formcontact_petit {
+              background-color: #0E9594;
+              border-radius: 2%;
+              margin-left: 2%;
+              margin-bottom: 3%;
+              font-size: 1.4rem;
+              color: white;
+              .calendrier {
+                  width: 60%;
+              }
+              .section {
+                  border-top: solid 0.5px #40404c;
+              }
