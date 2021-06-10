@@ -15,7 +15,11 @@
     {% else %}
         <li class="list-group-item"><a href="" class="btn btn-warning">Ne plus être membre</a></li>
     {% endif %}
-     <li class="list-group-item"><a href="" class="btn btn-danger">Supprimer compte</a></li>
+    <form method="POST" action="{{path('admin_supprimer_user',{user : user.id})}}">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="_token" value="{{ csrf_token('SUP'~ user.id) }}">
+     <li class="list-group-item"><input type="submit" class="btn btn-danger" value="Supprimer compte"></input></li>
+    </form>
 </ul>
 
 {% endblock %}

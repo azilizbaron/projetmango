@@ -21,13 +21,13 @@ class Inscription
 
     /**
      * @ORM\ManyToOne(targetEntity=user::class, inversedBy="inscriptions")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      *
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=circuit::class, inversedBy="inscriptions")
-     * 
      */
     private $circuit;
 
