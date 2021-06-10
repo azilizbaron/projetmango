@@ -6,6 +6,7 @@ use App\Entity\Circuit;
 use App\Entity\Inscription;
 use App\Entity\User;
 use App\Repository\CircuitRepository;
+use App\Repository\InscriptionRepository;
 use DateTime;
 use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,10 +59,9 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil/inscription", name="inscriptionCourse")
      */
-    public function inscriptionCourse(Request $request, MailerInterface $mailer)
+    public function inscriptionCourse(Request $request, MailerInterface $mailer, InscriptionRepository $repo)
     {
         //si utilisateur connecté enregistrement de l'inscription dans la BDD
-        // sinon redirection à la page connection
         if($this->getUser()){
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -77,7 +77,7 @@ class AccueilController extends AbstractController
                 'user' => $this->getUser()->getId(),
                 'circuit' => $id,
             ]);
-
+            //si l'utilisateur est déjà inscrit
             if($insc){
                 //affiche du message 'déjà inscrit'
                 $this->addFlash('success', 'Inscription déjà réalisée');
@@ -88,8 +88,23 @@ class AccueilController extends AbstractController
                 $inscription->setCircuitId($circuit);
                 $date = new DateTime();
                 $inscription->setDateInscription($date->setTimezone(new DateTimeZone('Europe/Paris')));
-                $inscription->setListeAttente(0);
 
+                $nbplace = $circuit->getNbPlaces();
+                $nbInscrit=count($repo->findBy(["circuit"=>$circuit->getId()]));
+                //si il y a plus de place disponible que le nombre d'inscrit
+                if($nbplace>$nbInscrit){
+                    $inscription->setListeAttente(0);
+                    $textMail="Bonjour,
+                    Vous êtes bien inscrit à la course du ".$circuit->getdate()->format('d-m-Y')."
+                    Cordialement, l'équipe MX PARC";
+                }else{
+                    $inscription->setListeAttente(1);
+                    $textMail= "Bonjour,
+                    La course du ".$circuit->getdate()->format('d-m-Y')." a été victime de son succès.
+                    Cependant pas de panique, vous êtes bien sur la liste d'attente. 
+                    Si une place se libère vous en serez avertis par mail !
+                    Cordialement, l'équipe MX PARC";
+                }
                 //envoie dans la BDD
                 $entityManager->persist($inscription);
                 $entityManager->flush();
@@ -101,20 +116,15 @@ class AccueilController extends AbstractController
                 $email=(new Email())
                     ->from("projetmangopoec@gmail.com")
                     //->to($this->getUser()->getEmail())
-                    ->to('azilizba@gmail.com')
+                    ->to('amat.ambre@gmail.com')
                     ->subject("Confirmation inscription à la prochaine course")
-                    ->text(
-                    "Bonjour,
-                    Vous êtes bien inscrit à la course du ".$circuit->getdate()->format('d-m-Y')."
-                    Cordialement, l'équipe MX PARC");
+                    ->text($textMail);
                 $mailer->send($email);
             }
 
-        }else{
+        }else{ // sinon redirection à la page connection
             return $this->redirectToRoute('app_login');
         }
-        
-
 
         return $this->redirectToRoute('accueil');
     }
