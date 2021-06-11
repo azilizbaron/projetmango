@@ -203,14 +203,22 @@ class CourseController extends AbstractController
     public function genererPdf(UserRepository $repo, Circuit $course ){
         // les participants à la course
         $tabParticipants = $repo-> inscritCourse($course);
+       // dd("nombre de places : ". $course->getNbPlaces() ." nombre de participants : " . count($tabParticipants));
         //création du pdf
         $dompdf= new Dompdf();
 
+        if(count($tabParticipants)< $course->getNbPlaces()){
+            $places = count($tabParticipants);
+        }
+        else{
+            $places = $course->getNbPlaces();
+        }
+        
         //récupération de la vue    
         $html = $this->renderView("admin/course/pdf.html.twig", [
             "participants" => $tabParticipants,
             "date" => $course->getDate(),
-            "places" => $course->getNbPlaces()
+            "places" => $places
         ]);
         
         //passer du html au pdf
