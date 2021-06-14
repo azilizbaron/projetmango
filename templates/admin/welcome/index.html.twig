@@ -11,22 +11,22 @@
 <div class="row">
  {% if is_granted('IS_ANONYMOUS')%}
  {% else %}
-   <h1>Hello {{ app.user.prenom}} ! 🦺</h1>
+   <h1>Bonjour {{ app.user.prenom}} ! 🦺</h1>
  {% endif %}
 </div>
 
     <div class="container formcontact_fond">
         <div class ="row">
-            <div class ="column col-12">
+            <div class ="image">
             
      <a href="{{ path('admin_user') }}"> 
-        <img class="rounded float-left mr-5 pt-4 pl-5 pr-7 pb-4" src="{{ asset('img/Utilisateurs.png')}}" alt="Gestion des utilisateurs" height="300" width"10" >
+        <img class="tuile1" src="{{ asset('img/Utilisateurs.png')}}" alt="Gestion des utilisateurs" height="300" width"10" >
      </a> 
-    
+
     <a href="{{ path('admin_consulter_course') }}">   
-        <img class="rounded float-right mr-5 pt-4 pl-5 pr-7 pb-4" src="{{ asset('img/Courses.jpg')}}" alt="Gestion des courses" height="300" width"10" >
+        <img class="tuile2" src="{{ asset('img/Courses.jpg')}}" alt="Gestion des courses" height="300" width"10" >
      </a>  
-             </div>
+           </div>  
         </div>
     </div>
 

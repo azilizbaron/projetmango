@@ -68,10 +68,14 @@ class UserController extends AbstractController
             $user->setMembre(true);
         }
         $em->persist($user);
-        $em->flush();             
-        return $this->redirectToRoute('admin_user');
-   
-    }
+        $em->flush(); 
+
+        $this->addFlash('success','Modifications effectuées');
+
+        return $this->render('admin/user/user.html.twig',[
+            'user'=> $user
+        ]);    
+       }
 
 }
 
