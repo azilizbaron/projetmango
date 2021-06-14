@@ -103,11 +103,12 @@ class CourseController extends AbstractController
         //construction et envoie du mail pour prévenir du changement de date
             $email=(new Email())
                 ->from("projetmangopoec@gmail.com")
-                ->to($participant->getEmail())
-                ->subject("Numéro de licence")
+               // ->to($participant->getEmail())
+               ->to("projetmangopoec@gmail.com")
+                ->subject("La course a été reportée")
                 ->text(
                 "Bonjour,
-                La course à laqu'elle vous vous êtes inscrit viens d'être reportée d'une semaine.
+                La course à laquelle vous vous êtes inscrit viens d'être reportée d'une semaine.
                 En vous remerciant de votre compréhension.
                 Cordialement, l'équipe MX PARC");
             $mailer->send($email);
@@ -143,12 +144,13 @@ class CourseController extends AbstractController
             //envoyer un mail 
             $emailSupp=(new Email())
                 ->from("projetmangopoec@gmail.com")
-                ->to($user->getEmail())
-                ->subject("Désinscrit de la course")
+                //->to($user->getEmail())
+                ->to("projetmangopoec@gmail.com")
+                ->subject("Désinscription de la course")
                 ->text(
-                "Bonjour,  
-                Nous somment au regret de vous annoncer que vous n'êtes plus inscrit à la prochaine course. 
-                Pour plus d'informations, merci de vous référer aux administrateurs. 
+                "Bonjour,
+                Nous sommes au regret de vous annoncer que vous n'êtes plus inscrit à la prochaine course.
+                Pour plus d'informations, merci de vous référer aux administrateurs.
                 Cordialement, l'équipe MX PARC");
                 $mailer->send($emailSupp);
         }
@@ -176,10 +178,11 @@ class CourseController extends AbstractController
                //envoie du mail 
                $emailInscrit=(new Email())
                 ->from("projetmangopoec@gmail.com")
-                ->to($participantU->getEmail())
-                ->subject("Inscritpion à la course")
+               // ->to($participantU->getEmail())
+               ->to("projetmangopoec@gmail.com")
+                ->subject("Inscritpion a la course : vous n'êtes plus sûr liste d'attente")
                 ->text(
-                "Bonjour,  
+                "Bonjour,
                 nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
                 Cordialement, l'équipe MX PARC");
                 $mailer->send($emailInscrit);
@@ -203,7 +206,6 @@ class CourseController extends AbstractController
     public function genererPdf(UserRepository $repo, Circuit $course ){
         // les participants à la course
         $tabParticipants = $repo-> inscritCourse($course);
-       // dd("nombre de places : ". $course->getNbPlaces() ." nombre de participants : " . count($tabParticipants));
         //création du pdf
         $dompdf= new Dompdf();
 
@@ -240,13 +242,14 @@ class CourseController extends AbstractController
         //construction et envoie du mail
         $email=(new Email())
             ->from("projetmangopoec@gmail.com")
-            ->to($user->getEmail())
+           // ->to($user->getEmail())
+           ->to("projetmangopoec@gmail.com")
             ->subject("Numéro de licence")
             ->text(
-            "Bonjour,  
-            merci de bien vouloir indiquer votre numéro le licence afin de pouvoir particier à la prochaine course de motocross.
-            Si celle-ci n'est pas indiqué la veille de l'évènement nous serons contraint d'anuler votre inscrition. 
-            En vous remerciant pour votre compréhension. 
+            "Bonjour, 
+            merci de bien vouloir indiquer votre numéro la licence afin de pouvoir participer à la prochaine course de motocross.
+            Si celle-ci n'est pas indiquée la veille de l'évènement nous serons contraints d'annuler votre inscription.
+            En vous remerciant pour votre compréhension.
             Cordialement, l'équipe MX PARC");
         $mailer->send($email);
         
