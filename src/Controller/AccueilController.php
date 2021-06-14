@@ -115,8 +115,9 @@ class AccueilController extends AbstractController
                 //envoie du mail de confirmation
                 $email=(new Email())
                     ->from("projetmangopoec@gmail.com")
-                    ->to($this->getUser()->getEmail())
-                    ->subject("Confirmation inscription à la prochaine course")
+                 //   ->to($this->getUser()->getEmail())
+                    ->to("projetmangopoec@gmail.com")
+                    ->subject("Confirmation : inscription à la prochaine course")
                     ->text($textMail);
                 $mailer->send($email);
             }
