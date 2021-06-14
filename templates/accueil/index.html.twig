@@ -19,8 +19,7 @@
     </div>
 
     <div class="col-12 col-lg-6 mt-5 text-center">
-      {# <img class="img-fluid calendrier" src="{{ asset('img/calendrier.png')}}" alt="carte"> #}
-      <div id="color-calendar"></div>
+      <img class="img-fluid calendrier" src="{{ asset('img/calendrier.png')}}" alt="carte">
     </div>
   </section>
 
@@ -86,44 +85,54 @@
     </div>
   </section>
   <section class="row section mt-5">
-  <div class="text-center mt-5">
-    <h2>Evenements passés</h2>
-    <p>Retrouver ci-dessous les photos des évènements passés des quatre derniers mois</p>
-  </div>
+    <div class="text-center mt-5">
+      <h2>Evenements passés</h2>
+      <p>Retrouver ci-dessous les photos des évènements passés des quatre derniers mois</p>
+    </div>
 
     <div class='card-deck'>
-    <div class="card  p-0 col-12 mt-3" style="width: 18rem;">
-      <img class="card-img-top" src="{{ asset('img/motocross1.jpg')}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Course du 07/03/2021 </h5>
-        <p class="card-text">Journée de reprise des courses après la pause hivernale</p>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card  p-0 col-12  mt-3">
+          <img class="card-img-top" src="{{ asset('img/motocross1.jpg')}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Course du 07/03/2021
+            </h5>
+            <p class="card-text">Journée de reprise des courses après la pause hivernale</p>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card  p-0 col-12 mt-3" >
+          <img class="card-img-top" src="{{ asset('img/motocross2.jpg')}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Course du 04/04/2021
+            </h5>
+            <p class="card-text">Plein de nouveaux venus qui ont été très bien accueilli</p>
+          </div>
+        </div>
+      </div>
 
-    <div class="card  p-0 col-12 mt-3" style="width: 18rem;">
-      <img class="card-img-top" src="{{ asset('img/motocross2.jpg')}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Course du 04/04/2021 </h5>
-        <p class="card-text">Plein de nouveaux venus qui ont été très bien accueilli</p>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card  p-0 col-12 mt-3">
+          <img class="card-img-top" src="{{ asset('img/motocross3.jpg')}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Course du 02/05/2021
+            </h5>
+            <p class="card-text">Bravo aux enfants qui ont fait de super belles performances</p>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="card  p-0 col-12  mt-3" style="width: 18rem;">
-      <img class="card-img-top" src="{{ asset('img/motocross3.jpg')}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Course du 02/05/2021 </h5>
-        <p class="card-text">Bravo aux enfants qui ont fait de super belles performances</p>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card  p-0 col-12 mt-3" >
+          <img class="card-img-top" src="{{ asset('img/motocross4.jpg')}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Course du 06/06/2021</h5>
+            <p class="card-text">Temps magnifique ce dimanche, et de très belles performances</p>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="card  p-0 col-12 mt-3" style="width: 18rem;">
-      <img class="card-img-top" src="{{ asset('img/motocross4.jpg')}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Course du 06/06/2021</h5>
-        <p class="card-text">Temps magnifique ce dimanche, et de très belles performances</p>
-      </div>
-    </div>
-    </div>
-</section>
+  </section>
 
 {% endblock %}

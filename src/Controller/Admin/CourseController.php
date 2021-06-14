@@ -13,11 +13,8 @@ use App\Entity\User;
 use App\Form\CircuitType;
 use App\Repository\InscriptionRepository;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
-use Dompdf\Options;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
