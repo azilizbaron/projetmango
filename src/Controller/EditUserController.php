@@ -43,7 +43,6 @@ class EditUserController extends AbstractController
         //gestion de la suppression de l'inscription
         //l'id de l'inscription + la date de la dernière inscription
         $inscription = $repoC->derniereCourseInscrit($user->getId());
-       // dd($inscription);
         //Si n'a rien récupéré
         if($inscription == []){
             $inscriptionDate = null;
@@ -83,12 +82,13 @@ class EditUserController extends AbstractController
                     //envoie du mail 
                     $email=(new Email())
                         ->from("projetmangopoec@gmail.com")
-                        ->to($participantU->getEmail())
-                        ->subject("Inscritpion à la course")
+                        ->to("projetmangopoec@gmail.com")
+                        //->to($participantU->getEmail())
+                        ->subject("Inscritpion à la course : vous n'êtes plus sur liste d'attente")
                         ->text(
-                        "Bonjour,  
+                        "Bonjour,
                         nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
-                        Cordialement, l'équipe MX PARC". $participantU->getEmail());
+                        Cordialement, l'équipe MX PARC");
                     $mailer->send($email);
                         
                     break;
