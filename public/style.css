@@ -87,3 +87,14 @@ h1 {
 .section {
     border-top: solid 0.5px #40404c;
 }
+
+.partage {
+    color: white !important;
+    vertical-align: middle;
+    padding-left: 27rem !important;
+}
+
+a.lien-partage:visited,
+a.lien-partage {
+    color: azure;
+}
