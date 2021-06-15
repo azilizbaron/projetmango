@@ -58,6 +58,18 @@ class EditUserController extends AbstractController
             $em->flush();
             $this->addFlash('success','Désinscription confirmée');
 
+            //mail de confirmation de désinscription
+            $emailDesinscrit=(new Email())
+                ->from("projetmangopoec@gmail.com")
+                ->to("projetmangopoec@gmail.com")
+                //->to($user->getEmail())
+                ->subject("Confirmation de désinscription")
+                ->text(
+                    "Bonjour,
+                    nous avons le plaisir de vous annoncer que vous n'êtes officiellement plus inscrit à la prochaine course de motocross.
+                    Cordialement, l'équipe MX PARC");
+            $mailer->send($emailDesinscrit);
+
             //ajout dela liste d'attente
 
             //récupération de la liste des inscrits
