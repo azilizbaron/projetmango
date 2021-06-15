@@ -108,7 +108,7 @@ class CourseController extends AbstractController
                 ->subject("La course a été reportée")
                 ->text(
                 "Bonjour,
-                La course à laquelle vous vous êtes inscrit viens d'être reportée d'une semaine.
+                La course à laquelle vous vous êtes inscrit vient d'être reportée d'une semaine.
                 En vous remerciant de votre compréhension.
                 Cordialement, l'équipe MX PARC");
             $mailer->send($email);
@@ -183,7 +183,7 @@ class CourseController extends AbstractController
                 ->subject("Inscritpion a la course : vous n'êtes plus sûr liste d'attente")
                 ->text(
                 "Bonjour,
-                nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
+                Nous avons le plaisir de vous annoncer que vous êtes officiellement inscrit à la prochaine course de motocross, une place venant de se libérer.
                 Cordialement, l'équipe MX PARC");
                 $mailer->send($emailInscrit);
                 
@@ -247,7 +247,7 @@ class CourseController extends AbstractController
             ->subject("Numéro de licence")
             ->text(
             "Bonjour, 
-            merci de bien vouloir indiquer votre numéro la licence afin de pouvoir participer à la prochaine course de motocross.
+            Merci de bien vouloir indiquer votre numéro de licence afin de pouvoir participer à la prochaine course de motocross.
             Si celle-ci n'est pas indiquée la veille de l'évènement nous serons contraints d'annuler votre inscription.
             En vous remerciant pour votre compréhension.
             Cordialement, l'équipe MX PARC");
