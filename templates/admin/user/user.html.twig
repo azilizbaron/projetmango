@@ -4,11 +4,11 @@
 {% block title %}{{user.nom}} {{user.prenom}}{% endblock %}
 
 {% block body %}
- {% for message in app.flashes('success') %}
+    {% for message in app.flashes('success') %}
         <div class="alert alert-success">
           {{ message }}
         </div>
-      {% endfor %}
+    {% endfor %}
 <h1 class="text-center m-5">{{user.prenom}} {{user.nom}}</h1>
 <ul class="list-group text-center">
     <li class="list-group-item">Email : {{user.email}}</li>
@@ -22,10 +22,9 @@
         <li class="list-group-item"><a href="{{path('admin_editMembership_user',{user : user.id})}}" class="btn btn-warning">Ne plus être membre</a></li>
     {% endif %}
     <form method="POST" action="{{path('admin_supprimer_user',{user : user.id})}}" onsubmit="return confirm('Etes-vous sûr ?')">
-
         <input type="hidden" name="_method" value="delete">
         <input type="hidden" name="_token" value="{{ csrf_token('SUP'~ user.id) }}">
-     <li class="list-group-item"><input type="submit" class="btn btn-danger" value="Supprimer compte"></input></li>
+        <li class="list-group-item"><input type="submit" class="btn btn-danger" value="Supprimer compte"></input></li>
     </form onsubmit="return confirm('Confirmer la suppression ?');">
 </ul>
 {% endblock %}

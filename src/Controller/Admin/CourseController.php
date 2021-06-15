@@ -63,28 +63,45 @@ class CourseController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted()){
-            //si dans circuit il y a déjà un circuit avec le même nombre de place et la même date
-         /*   $testDate = $repo->findBy(["date" => $form->get("date")->getData()]);
-            $testDate->getPlaces();*/
-          //  dd(is_null($testDate));
-           // if(is_null($testDate)){
+            $test = true;
+            //On vérifie que la course n'ai pas déjà été crée
 
-         //   }else{
+            //on récupère tous les potentiels circuits avec la même date
+            $testDate = $repo->findBy(["date" => $form->get("date")->getData()]);
+            //si il y a bien un circuit à la même date
+            if($testDate==[]){ //si le tableau est vide ->pas de course 
                 $circuit = new Circuit;
                 $circuit->setDate($form->get("date")->getData());
                 $circuit->setNbPlaces($form->get("nb_places")->getData());
-            $em->persist($circuit);
-            $em->flush();
-            $this->addFlash('success','Nouvelle course créée');
-          //  }
-           
-
+                $em->persist($circuit);
+                $em->flush();
+                $this->addFlash('success','Nouvelle course créée'); 
+            }
+            else{
+                //on va vérifier qu'il n'y en as pas avec le même nombre de places 
+                foreach($testDate as $key => $value){
+                    //si il y  bien un circuit avec la même date 
+                    if($testDate[$key]->getNbPlaces() == $form->get("nb_places")->getData()){
+                    //on envoie un message disant que la course a déjà été crée 
+                        $this->addFlash('success', 'La course existe déjà');
+                        $test = false;
+                    }
+                }
+                if($test){
+                        $circuit = new Circuit;
+                        $circuit->setDate($form->get("date")->getData());
+                        $circuit->setNbPlaces($form->get("nb_places")->getData());
+                        $em->persist($circuit);
+                        $em->flush();
+                        $this->addFlash('success','Nouvelle course créée'); 
+                }
+            }
             $date = new DateTime();
             // récupère les courses dont le mois et l'année correspondent à la date du jour
-         $courses = $repo->coursesAVenir($date->format('Y-m'));
-         return $this->render('admin/course/index.html.twig', [
-            'courses' => $courses,
-        ]);
+            $courses = $repo->coursesAVenir($date->format('Y-m'));
+            return $this->render('admin/course/index.html.twig', [
+                'courses' => $courses,
+            ]);
         }
 
         return $this->render('admin/course/ajoutCourse.html.twig', [
