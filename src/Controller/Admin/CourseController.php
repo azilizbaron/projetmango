@@ -63,11 +63,21 @@ class CourseController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted()){
-           $circuit = new Circuit;
-            $circuit->setDate($form->get("date")->getData());
-            $circuit->setNbPlaces($form->get("nb_places")->getData());
+            //si dans circuit il y a déjà un circuit avec le même nombre de place et la même date
+         /*   $testDate = $repo->findBy(["date" => $form->get("date")->getData()]);
+            $testDate->getPlaces();*/
+          //  dd(is_null($testDate));
+           // if(is_null($testDate)){
+
+         //   }else{
+                $circuit = new Circuit;
+                $circuit->setDate($form->get("date")->getData());
+                $circuit->setNbPlaces($form->get("nb_places")->getData());
             $em->persist($circuit);
             $em->flush();
+            $this->addFlash('success','Nouvelle course créée');
+          //  }
+           
 
             $date = new DateTime();
             // récupère les courses dont le mois et l'année correspondent à la date du jour
@@ -92,6 +102,7 @@ class CourseController extends AbstractController
        $course-> setDate($date2);
        $em->persist($course);
        $em->flush();
+       $this->addFlash('success','La course a bien été reportée');
 
         //Ajout de touts les participants dans le tableau
        $tabParticipants = $repo->inscritCourse($course);
@@ -101,7 +112,7 @@ class CourseController extends AbstractController
             $email=(new Email())
                 ->from("projetmangopoec@gmail.com")
                // ->to($participant->getEmail())
-               ->to("projetmangopoec@gmail.com")
+                ->to("projetmangopoec@gmail.com")
                 ->subject("La course a été reportée")
                 ->text(
                 "Bonjour,
