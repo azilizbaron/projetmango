@@ -101,8 +101,8 @@ class AccueilController extends AbstractController
                     $inscription->setListeAttente(1);
                     $textMail= "Bonjour,
                     La course du ".$circuit->getdate()->format('d-m-Y')." a été victime de son succès.
-                    Cependant pas de panique, vous êtes bien sur la liste d'attente. 
-                    Si une place se libère vous en serez avertis par mail !
+                    Cependant, pas de panique, vous êtes bien sur la liste d'attente. 
+                    Si une place se libère vous en serez averti par mail !
                     Cordialement, l'équipe MX PARC";
                 }
                 //envoie dans la BDD
