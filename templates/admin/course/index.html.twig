@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Administration courses{% endblock %}
+{% block title %}Administration des courses{% endblock %}
 
 {% block body %}
 <h1 class="text-center m-5">Page d'administration des courses</h1>
-<div class="row col-1 pr-4">
-<a href="{{path('admin_ajouter_course')}}" class="btn btn-info"><i class="fas fa-plus"></i></a>
-</div>
-<table class = "table text-center mt-4">
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+    {% endfor %}
+<a href="{{path('admin_ajouter_course')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+<table class = "table text-center">
     <thead>
         <tr>
             <th>Circuit Adulte</th>

@@ -12,43 +12,20 @@ use App\Entity\Circuit;
 use App\Entity\User;
 use App\Form\CircuitType;
 use App\Repository\InscriptionRepository;
-use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use App\Utils\Utils;
 
 class CourseController extends AbstractController
 {
     /**
      * @Route("/admin/course", name="admin_consulter_course")
      */
-    public function consulterCourse(CircuitRepository $repo): Response
+    public function consulterCourse(Utils $utils): Response
     {
-        //date du jour
-        $date = new DateTime();
-        // récupère les courses dont le mois et l'année correspondent à la date du jour
-        $courses = $repo->coursesAVenir($date->format('Y-m'));
-        $test =  $courses[0]["date"];
-        //si les courses du mois courant sont déjà passé
-        if(substr($test,-2) < $date->format("d")){
-            // si on est en décembre
-            if($date->format('m')=="12"){
-                $nouvelleAnnee = strval($date->format("Y")+1);
-                // la nouvelle date sera en janvier de l'année suivante
-                $nouvelleDate = $nouvelleAnnee."-01";
-            }else{ // si nous somme un autre mois
-                $nouveauMois = $date->format("m")+1;
-                //si le nouveau mois est plus petit que 10
-                if($nouveauMois < 10){
-                    $nouveauMois = "0".$nouveauMois;
-                }
-                // la nouvelle date sera le mois suivant de l'année en cours
-                $nouvelleDate = $date->format("Y") ."-". $nouveauMois; 
-            }
-           
-            $courses = $repo->coursesAVenir($nouvelleDate);
-        } 
+        $courses = $utils->dateProchaineCourse();
         return $this->render('admin/course/index.html.twig', [
             'courses' => $courses,
         ]);
@@ -57,24 +34,49 @@ class CourseController extends AbstractController
     /**
      * @Route("/admin/course/ajouter", name="admin_ajouter_course")
      */
-    public function ajouterCourse(EntityManagerInterface $em, Request $request, CircuitRepository $repo){
+    public function ajouterCourse(EntityManagerInterface $em, Request $request, CircuitRepository $repo, Utils $utils){
 
         $form = $this->createForm(CircuitType::class);
 
         $form->handleRequest($request);
         if($form->isSubmitted()){
-           $circuit = new Circuit;
-            $circuit->setDate($form->get("date")->getData());
-            $circuit->setNbPlaces($form->get("nb_places")->getData());
-            $em->persist($circuit);
-            $em->flush();
+            $test = true;
+            //On vérifie que la course n'ai pas déjà été crée
 
-            $date = new DateTime();
-            // récupère les courses dont le mois et l'année correspondent à la date du jour
-         $courses = $repo->coursesAVenir($date->format('Y-m'));
-         return $this->render('admin/course/index.html.twig', [
-            'courses' => $courses,
-        ]);
+            //on récupère tous les potentiels circuits avec la même date
+            $testDate = $repo->findBy(["date" => $form->get("date")->getData()]);
+            //si il y a bien un circuit à la même date
+            if($testDate==[]){ //si le tableau est vide ->pas de course 
+                $circuit = new Circuit;
+                $circuit->setDate($form->get("date")->getData());
+                $circuit->setNbPlaces($form->get("nb_places")->getData());
+                $em->persist($circuit);
+                $em->flush();
+                $this->addFlash('success','Nouvelle course créée'); 
+            }
+            else{
+                //on va vérifier qu'il n'y en as pas avec le même nombre de places 
+                foreach($testDate as $key => $value){
+                    //si il y  bien un circuit avec la même date 
+                    if($testDate[$key]->getNbPlaces() == $form->get("nb_places")->getData()){
+                    //on envoie un message disant que la course a déjà été crée 
+                        $this->addFlash('success', 'La course existe déjà');
+                        $test = false;
+                    }
+                }
+                if($test){
+                        $circuit = new Circuit;
+                        $circuit->setDate($form->get("date")->getData());
+                        $circuit->setNbPlaces($form->get("nb_places")->getData());
+                        $em->persist($circuit);
+                        $em->flush();
+                        $this->addFlash('success','Nouvelle course créée'); 
+                }
+            }
+            $courses = $utils->dateProchaineCourse();
+            return $this->render('admin/course/index.html.twig', [
+                'courses' => $courses,
+            ]);
         }
 
         return $this->render('admin/course/ajoutCourse.html.twig', [
@@ -92,6 +94,7 @@ class CourseController extends AbstractController
        $course-> setDate($date2);
        $em->persist($course);
        $em->flush();
+       $this->addFlash('success','La course a bien été reportée');
 
         //Ajout de touts les participants dans le tableau
        $tabParticipants = $repo->inscritCourse($course);
@@ -101,7 +104,7 @@ class CourseController extends AbstractController
             $email=(new Email())
                 ->from("projetmangopoec@gmail.com")
                // ->to($participant->getEmail())
-               ->to("projetmangopoec@gmail.com")
+                ->to("projetmangopoec@gmail.com")
                 ->subject("La course a été reportée")
                 ->text(
                 "Bonjour,
