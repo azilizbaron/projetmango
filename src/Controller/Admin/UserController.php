@@ -55,4 +55,28 @@ class UserController extends AbstractController
         }
         return $this->redirectToRoute('admin_user');
     }
+
+    /**
+     * @Route("admin/user/editMenmbership/{user}", name="admin_editMembership_user")
+     */
+    public function edit_membership(User $user, Request $request, EntityManagerInterface $em): Response{
+
+        if($user->getMembre()){
+            $user->setMembre(false);
+        }
+        else {
+            $user->setMembre(true);
+        }
+        $em->persist($user);
+        $em->flush(); 
+
+        $this->addFlash('success','Modifications effectuées');
+
+        return $this->render('admin/user/user.html.twig',[
+            'user'=> $user
+        ]);    
+       }
+
 }
+
+

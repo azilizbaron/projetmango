@@ -1,43 +1,100 @@
-          .test {
-          background-color: teal;
-          color: white;
-          margin-top: 2%;
-          margin-left: 0%;
-          margin-right: 0%;
-      }
-      
-      .mentionslegales {
-          text-align: left;
-      }
-      
-      .formcontact_fond {
-          background-color: rgb(219, 217, 217);
-          margin-top: 2%;
-          margin-bottom: 4%;
-          border-top-left-radius: 80px 80px;
-          border-top-right-radius: 80px 80px;
-          border-bottom-left-radius: 80px 80px;
-          border-bottom-right-radius: 80px 80px;
-      }
-      
-      h1 {
-          text-align: center;
-          padding-top: 3%;
-          padding-bottom: 3%;
-      }
-      
-      .formcontact_petit {
-          background-color: #0E9594;
-          border-radius: 2%;
-          margin-left: 2%;
-          margin-bottom: 3%;
-          font-size: 1.4rem;
-          color: white;
-      }
-      
-    .calendrier {
-        width: 60%;
-    }
-    .section {
-        border-top: solid 0.5px #40404c;
-    }
+.test {
+    background-color: teal;
+    color: white;
+    margin-top: 2%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+.mentionslegales {
+    text-align: left;
+}
+
+.formcontact_fond {
+    background-color: rgb(219, 217, 217);
+    margin-top: 2%;
+    margin-bottom: 4%;
+    border-top-left-radius: 80px 80px;
+    border-top-right-radius: 80px 80px;
+    border-bottom-left-radius: 80px 80px;
+    border-bottom-right-radius: 80px 80px;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.formcontact_petit {
+    background-color: #0E9594;
+    border-radius: 2%;
+    margin-left: 2%;
+    margin-bottom: 3%;
+    font-size: 1.4rem;
+    color: white;
+}
+
+.tuile1 {
+    padding-left: 11rem !important;
+    padding-right: 3rem !important;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    vertical-align: middle;
+    height: 250px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #008CBA;
+}
+
+.container:hover .overlay {
+    opacity: 1;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.tuile2 {
+    padding-left: 10rem !important;
+    padding-right: 8rem !important;
+    vertical-align: middle;
+    height: 250px;
+}
+
+.calendrier {
+    width: 60%;
+}
+
+.section {
+    border-top: solid 0.5px #40404c;
+}
+
+.partage {
+    color: white !important;
+    vertical-align: middle;
+    padding-left: 27rem !important;
+}
+
+a.lien-partage:visited,
+a.lien-partage {
+    color: azure;
+}

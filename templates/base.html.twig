@@ -40,14 +40,9 @@
         </ul>
     </div>
 
-    <div class="mr-auto order-0">
-       
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
 
-    <div class="navbar-collapse collapse w-200 order-2 order-ml-auto flex-nowrap">
+
+    <div class="navbar-collapse collapse w-200 order-2 order-ml-auto flex-nowrap dual-collapse2">
         <ul class="navbar-nav ml-auto">
 {# Onglet connexion visible uniquement sur la page login #}
     {% if is_granted('IS_ANONYMOUS')%}
@@ -66,7 +61,7 @@
 {# Onglet admin uniquement pour l'admin #}
    {% if is_granted('ROLE_ADMIN') %}       
         <li class="nav-item">
-              <a class="nav-link" href="{{ path('admin_welcome')}}""><i class="fas fa-user-cog fa-2x"></i></a>
+              <a class="nav-link" href="{{ path('admin_welcome')}}"><i class="fas fa-user-cog fa-2x"></i></a>
         </li> 
    {% endif %}
 {# onglet mon compte pour tout le monde #}
@@ -86,6 +81,12 @@
   {% endif %}
         </ul>
     </div>
+        <div class="mr-auto order-0">
+       
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
 
 </nav>
 <div class="container">
@@ -96,13 +97,9 @@
 </div>
 </div>
         {% endblock %}
-        {% block body %}
-        
-  
-    
-        
-        
-        {% endblock %}
+   
+    {% block body %}
+    {% endblock %}
 
         {% block footer %}
 <!-- Footer -->
