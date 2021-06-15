@@ -34,9 +34,10 @@
           font-size: 1.4rem;
           color: white;
       }
-          .calendrier {
-              width: 60%;
-          }
-          .section {
-              border-top: solid 0.5px #40404c;
-          }
+      
+    .calendrier {
+        width: 60%;
+    }
+    .section {
+        border-top: solid 0.5px #40404c;
+    }
