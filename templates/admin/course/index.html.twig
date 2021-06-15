@@ -4,8 +4,10 @@
 
 {% block body %}
 <h1 class="text-center m-5">Page d'administration des courses</h1>
-<a href="{{path('admin_ajouter_course')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
-<table class = "table text-center">
+<div class="row col-1 pr-4">
+<a href="{{path('admin_ajouter_course')}}" class="btn btn-info"><i class="fas fa-plus"></i></a>
+</div>
+<table class = "table text-center mt-4">
     <thead>
         <tr>
             <th>Circuit Adulte</th>
@@ -41,13 +43,19 @@
 <div class="row">
   
 
-        <a class="btn btn-info col-4 lien-partage offset-4" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//karac.ch/blog/bouton_partage_personnalise">
+        <a class="btn btn-info col-3 lien-partage offset-2" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//karac.ch/blog/bouton_partage_personnalise">
             <span class="fb-icon">
-            Partager la course <i class="fab fa-facebook-square"></i>
+            Partager cette course <i class="fab fa-facebook-square"></i>
+            </span> 
+        </a>
+
+         <a class="btn btn-info col-3 lien-partage offset-2" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//karac.ch/blog/bouton_partage_personnalise">
+            <span class="fb-icon">
+            Partager cette course <i class="fab fa-facebook-square"></i>
             </span> 
         </a>
     
 </div>
 
-</div>
+
 {% endblock %}
