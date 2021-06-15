@@ -39,12 +39,12 @@ class AppFixtures extends Fixture
         $manager->persist($circuit4);
 
         $circuit5 = new Circuit();
-        $circuit5->setDate(new DateTime("04/07/2021"))
+        $circuit5->setDate(new DateTime("07/04/2021"))
         ->setNbPlaces(75);
         $manager->persist($circuit5);
 
         $circuit6 = new Circuit();
-        $circuit6->setDate(new DateTime("04/07/2021"))
+        $circuit6->setDate(new DateTime("07/04/2021"))
         ->setNbPlaces(15);
         $manager->persist($circuit6);
 
@@ -53,24 +53,6 @@ class AppFixtures extends Fixture
 
         //tableau avec tous les circuits enfants
         $circuitsEnfants=[$circuit2,$circuit4, $circuit6];
-
-
-        //Création de l'administrateur
-        $userAdmin = new User();
-        $userAdmin->setEmail("admin@admin.com")
-        ->setRoles(['ROLE_ADMIN'])
-        ->setPassword('admin')
-        ->setNom('ROBICHET')
-        ->setPrenom('Joël')
-        ->setTel("06000000")
-        ->setAdresse("1 rue du pré")
-        ->setCp('35000')
-        ->setVille('Rennes')
-        ->setNumLicence("6666666666")
-        ->setDateNaissance(new DateTime("10/12/1979"))
-        ->setMembre(1);
-        $manager->persist($userAdmin);
-
 
         //génération de données aléatoires pour crée des utilisateur
         foreach($circuitsAdultes as $ca){
